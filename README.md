@@ -7,4 +7,4 @@ beekeepers to a national market, where they can sell their local honey.
 AirBeeAndBee uses a Rails backend, and React frontend, along with parallax and
 bootstrap for styling. Hosted on Heroku, a SQL database is  employed.
 
-![Alt text](desktop/AirBeeAndBeeFlow.png?raw=true "Title")
+![Alt text](AirBeeAndBeeFlow.png)
