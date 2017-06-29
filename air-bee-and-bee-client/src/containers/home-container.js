@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 
 
+import SignInUpForm from '../components/sign-in-up-form'
+
+
+
+
 class HomeContainer extends Component {
   constructor() {
     super()
 
     this.state= {
-
+      name: ''
     }
   }
+
+
 
 
   componentDidMount() {
@@ -21,9 +28,17 @@ class HomeContainer extends Component {
     .then(resp => console.log(resp))
   }
 
+
+
+
+
+
   render() {
     return (
+      <div>
       <h1>a</h1>
+      <SignInUpForm />
+      </div>
     )
   }
 }
