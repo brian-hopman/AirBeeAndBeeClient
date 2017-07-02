@@ -1,14 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class ApiaryLister extends Component {
-  constructor() {
-    super()
-
-    this.state= {
-
-    }
-  }
-
+const ApiaryLister = {
 
   render() {
     return (
