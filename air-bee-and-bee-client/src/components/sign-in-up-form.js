@@ -65,7 +65,7 @@ class SignInUpForm extends Component {
         <label>Email:<input type='text' id='email' value={this.state.category}></input></label><br/>
         <label>Is This a Vendor Account?:<input type='checkbox' id='isVendor' onChange={this.handlesChange}></input></label><br/>
         <input type='submit' value='submit'></input>
-      </form>
+     </form>
     )
   }
 }
