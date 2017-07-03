@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 
 class VendorSignUp extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
+    this.state = {
+      apiaryName: ''
+    }
 
-
+    this.handlesChange=this.handlesChange.bind(this)
+    this.handlesFormSubmit=this.handlesFormSubmit.bind(this)
   }
 
   handlesChange(e) {
@@ -28,12 +32,13 @@ class VendorSignUp extends Component {
       headers: headers,
       body: data
     })
-    console.log('asasdasdasd')
+    .then(res => res.json())
+    .then(res => this.props.setVendorId(res.vendorId))
   }
 
   render() {
     return (
-      <form onSubmit={this.props.handlesFormSubmit} onChange={this.props.handlesChange}>
+      <form onSubmit={this.handlesFormSubmit} onChange={this.handlesChange}>
          <label>Name of Apiary:<input type='text' id='apiaryName' value={this.state.apiaryName}></input></label><br/>
          <input type='submit' value='submit'></input>
      </form>

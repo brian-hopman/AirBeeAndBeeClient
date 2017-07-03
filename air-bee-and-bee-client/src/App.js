@@ -19,10 +19,13 @@ class App extends Component {
       //search
       searchTerm: '',
       //consumer
-      consumerId:''
+      consumerId: '',
+      //vendor
+      vendorId: ''
     }
     this.handlesSearch=this.handlesSearch.bind(this)
     this.setConsumerId=this.setConsumerId.bind(this)
+    this.setVendorId=this.setVendorId.bind(this)
   }
 
   // SEARCH
@@ -46,7 +49,16 @@ class App extends Component {
     this.setState({
       consumerId: id
     })
+    console.log(this.state.consumerId)
+
   }
+
+  setVendorId(id) {
+    this.setState({
+        vendorId: id
+      })
+    console.log(this.state)
+    }
 
   render() {
     console.log(this.state)
@@ -56,7 +68,7 @@ class App extends Component {
           <Switch>
             <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
             <Route path='/ApiaryLister' component={()=> ApiaryLister} />
-            <Route path='/vendorSignUp' component={() => <VendorSignUp/>}/>
+            <Route path='/vendorSignUp' component={() => <VendorSignUp setVendorId={this.setVendorId}/>}/>
             <Route path='/ThankYou' component={ThankYou} />
             <Route path='/Apiary' component={Apiary} />
             <Route path='/ApiaryInfo' component={ApiaryInfo} />
