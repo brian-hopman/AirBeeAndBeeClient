@@ -12,24 +12,17 @@ class SignInUpForm extends Component {
  constructor(props){
    super(props)
    this.state = {
-     firstName: '',
-     lastName: '',
-     email: '',
-     vendorAccount: false
-   }
-   this.handlesChange = this.handlesChange.bind(this)
-   this.handlesFormSubmit = this.handlesFormSubmit.bind(this)
-   this.redirectsToVendorSignUp = this.redirectsToVendorSignUp.bind(this)
+      firstName: '',
+      lastName: '',
+      email: '',
+      vendorAccount: ''
+  }
+  this.handlesFormSubmit = this.handlesFormSubmit.bind(this)
+  this.handleFormState = this.handleFormState.bind(this)
+  this.redirectsToVendorSignUp = this.redirectsToVendorSignUp.bind(this)
  }
 
- handlesChange(e) {
-   this.setState({
-     firstName: document.getElementById('firstName').value,
-     lastName: document.getElementById('lastName').value,
-     email: document.getElementById('email').value,
-     vendorAccount: document.getElementById('isVendor').checked
-   })
- }
+
 
  redirectsToVendorSignUp() {
    if (this.state.vendorAccount === true) {
@@ -40,30 +33,34 @@ class SignInUpForm extends Component {
 
  handlesFormSubmit(e) {
    e.preventDefault()
-   let state={
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.email,
-        vendorAccount: this.state.vendorAccount
-      }
    let headers = new Headers();
    headers.set('Content-Type', 'application/json');
-   let data = JSON.stringify(state)
+   let data = JSON.stringify(this.state)
    fetch('http://localhost:3000/consumers', {
      method: 'POST',
      headers: headers,
      body: data
-   })
+   }).then( resp => resp.json() ).then( data => {this.props.setConsumerId(data.consumerId)} )
    this.redirectsToVendorSignUp()
+ }
+
+ handleFormState() {
+   this.setState({
+     firstName: document.getElementById('firstName').value,
+     lastName: document.getElementById('lastName').value,
+     email: document.getElementById('email').value,
+     vendorAccount: document.getElementById('isVendor').checked
+   })
+   console.log(this.state)
  }
 
  render(){
    return (
-     <form onChange={this.handlesChange} onSubmit={this.handlesFormSubmit}>
-        <label>First Name:<input type='text' id='firstName' value={this.state.firstName}></input></label><br/>
-        <label>Last Name:<input type='text' id='lastName' value={this.state.lastName}></input></label><br/>
-        <label>Email:<input type='text' id='email' value={this.state.category}></input></label><br/>
-        <label>Is This a Vendor Account?:<input type='checkbox' id='isVendor' onChange={this.handlesChange}></input></label><br/>
+     <form onSubmit={this.handlesFormSubmit}>
+        <label>First Name:<input type='text' id='firstName' onChange={this.handleFormState} ></input></label><br/>
+        <label>Last Name:<input type='text' id='lastName' onChange={this.handleFormState} ></input></label><br/>
+        <label>Email:<input type='text' id='email' onChange={this.handleFormState}></input></label><br/>
+        <label>Is This a Vendor Account?:<input type='checkbox' id='isVendor' onChange={this.handleFormState}></input></label><br/>
         <input type='submit' value='submit'></input>
      </form>
     )

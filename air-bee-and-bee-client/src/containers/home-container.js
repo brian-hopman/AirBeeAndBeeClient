@@ -9,44 +9,27 @@ class HomeContainer extends Component {
   constructor() {
     super()
 
-    this.state= {
-      //search
-      searchTerm: ''
-    }
-    this.handlesSearch=this.handlesSearch.bind(this)
+
   }
 
-  componentDidMount() {
-    fetch('http://localhost:3000/products', { method: 'GET',
-                 headers: '',
-                 mode: 'cors',
-                 cache: 'default' }
-          )
-    .then(resp => resp.json())
-    .then(resp => console.log(resp))
-  }
+  // componentDidMount() {
+  //   fetch('http://localhost:3000/products', { method: 'GET',
+  //                headers: '',
+  //                mode: 'cors',
+  //                cache: 'default' }
+  //         )
+  //   .then(resp => resp.json())
+  //   .then(resp => console.log(resp))
+  // }
 
-  handlesSearch(event) {
-    this.setState({
-      searchTerm: event.target.value
-    })
-
-    fetch(`http://localhost:3000/consumers/show/${this.state.searchTerm}`, { method: 'GET',
-                 headers: '',
-                 mode: 'cors',
-                 cache: 'default' }
-          )
-    .then(resp => resp.json())
-    .then(resp => console.log(resp))
-  }
 
   render() {
     return (
       <div>
-      <SearchBar handlesSearch={this.handlesSearch}/>
+      <SearchBar searchTerm={this.props.searchTerm} handlesSearch={this.props.handlesSearch}/>
       <h1>a</h1>
       <Link to='vendorSignUp'>Sign Up</Link>
-      <SignInUpForm />
+      <SignInUpForm setConsumerId={this.props.setConsumerId} state={this.props.state} handlesFormSubmit={this.props.handlesFormSubmit} appState={this.props.appState}/>
       <Link to='ApiaryLister'>Our Apiaries</Link>
       </div>
     )

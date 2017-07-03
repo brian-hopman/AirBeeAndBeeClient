@@ -4,12 +4,8 @@ class VendorSignUp extends Component {
   constructor() {
     super()
 
-    this.state={
-      apiaryName: '',
-      Address: ''
-    }
-    this.handlesFormSubmit=this.handlesFormSubmit.bind(this)
-    this.handlesChange=this.handlesChange.bind(this)
+
+
   }
 
   handlesChange(e) {
@@ -37,7 +33,7 @@ class VendorSignUp extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handlesFormSubmit} onChange={this.handlesChange}>
+      <form onSubmit={this.props.handlesFormSubmit} onChange={this.props.handlesChange}>
          <label>Name of Apiary:<input type='text' id='apiaryName' value={this.state.apiaryName}></input></label><br/>
          <input type='submit' value='submit'></input>
      </form>
