@@ -68,7 +68,7 @@ class App extends Component {
           <Switch>
             <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
             <Route path='/ApiaryLister' component={()=> ApiaryLister} />
-            <Route path='/vendorSignUp' component={() => <VendorSignUp setVendorId={this.setVendorId}/>}/>
+            <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId}/>}/>
             <Route path='/ThankYou' component={ThankYou} />
             <Route path='/Apiary' component={Apiary} />
             <Route path='/ApiaryInfo' component={ApiaryInfo} />

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { BrowserHistory} from 'react-history'
 import {withRouter} from 'react-router-dom'
 
 
