@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { BrowserHistory} from 'react-history'
+import {withRouter} from 'react-router-dom'
 
 
 
@@ -26,7 +28,7 @@ class SignInUpForm extends Component {
 
  redirectsToVendorSignUp() {
    if (this.state.vendorAccount === true) {
-     window.location.assign('/vendorSignUp')
+     this.props.history.push('/vendorSignup')
    }
  }
 
@@ -40,7 +42,9 @@ class SignInUpForm extends Component {
      method: 'POST',
      headers: headers,
      body: data
-   }).then( resp => resp.json() ).then( data => {this.props.setConsumerId(data.consumerId)} )
+   })
+   .then( resp => resp.json() )
+   .then( data => {this.props.setConsumerId(data.consumerId)} )
    this.redirectsToVendorSignUp()
  }
 
@@ -67,4 +71,4 @@ class SignInUpForm extends Component {
   }
 }
 
-export default SignInUpForm
+export default withRouter(SignInUpForm)
