@@ -12,14 +12,51 @@ import ApiaryInfo from './components/apiary-info'
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super()
+
+    this.state= {
+      //search
+      searchTerm: '',
+      //consumer
+      consumerId:''
+    }
+    this.handlesSearch=this.handlesSearch.bind(this)
+    this.setConsumerId=this.setConsumerId.bind(this)
+  }
+
+  // SEARCH
+
+  handlesSearch(event) {
+    this.setState({
+      searchTerm: event.target.value
+    })
+
+    fetch(`http://localhost:3000/consumers/show/${this.state.searchTerm}`, { method: 'GET',
+                 headers: '',
+                 mode: 'cors',
+                 cache: 'default' }
+          )
+    .then(resp => resp.json())
+    .then(resp => console.log(resp))
+  }
+
+
+  setConsumerId(id) {
+    this.setState({
+      consumerId: id
+    })
+  }
+
   render() {
+    console.log(this.state)
     return (
       <div className="App">
         <BrowserRouter>
           <Switch>
-            <Route path='/home' component={HomeContainer} />
+            <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
             <Route path='/ApiaryLister' component={()=> ApiaryLister} />
-            <Route path='/vendorSignUp' component={VendorSignUp}/>
+            <Route path='/vendorSignUp' component={() => <VendorSignUp/>}/>
             <Route path='/ThankYou' component={ThankYou} />
             <Route path='/Apiary' component={Apiary} />
             <Route path='/ApiaryInfo' component={ApiaryInfo} />
