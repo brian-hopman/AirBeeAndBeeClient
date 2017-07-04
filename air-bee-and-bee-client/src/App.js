@@ -16,16 +16,21 @@ class App extends Component {
     super()
 
     this.state= {
+      apiaryId: '',
       //search
       searchTerm: '',
       //consumer
       consumerId: '',
       //vendor
-      vendorId: ''
+      vendorId: '',
+      //product
+      productId: ''
     }
     this.handlesSearch=this.handlesSearch.bind(this)
     this.setConsumerId=this.setConsumerId.bind(this)
     this.setVendorId=this.setVendorId.bind(this)
+    this.setProductId=this.setProductId.bind(this)
+    this.handlesClick=this.handlesClick.bind(this)
   }
 
   // SEARCH
@@ -44,6 +49,15 @@ class App extends Component {
     .then(resp => console.log(resp))
   }
 
+  handlesClick(event) {
+    let ary = event.target.href.split('/')
+    let id = parseInt(ary[ary.length-1])
+    this.setState({
+      apiaryId: id
+    })
+    console.log(this.state.apiaryId)
+  }
+
 
   setConsumerId(id) {
     this.setState({
@@ -60,6 +74,13 @@ class App extends Component {
     console.log(this.state)
     }
 
+  setProductId(id) {
+    this.setState({
+        productId: id
+      })
+    console.log(this.state)
+    }
+
   render() {
     console.log(this.state)
     return (
@@ -67,10 +88,10 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
-            <Route path='/ApiaryLister' component={()=> ApiaryLister} />
-            <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId}/>}/>
+            <Route path='/ApiaryLister' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
+            <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId} setProductId={this.setProductId}/>}/>
             <Route path='/ThankYou' component={ThankYou} />
-            <Route path='/Apiary' component={Apiary} />
+            <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId}/>} />
             <Route path='/ApiaryInfo' component={ApiaryInfo} />
           </Switch>
         </BrowserRouter>

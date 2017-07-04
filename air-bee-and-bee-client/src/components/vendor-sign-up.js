@@ -61,7 +61,7 @@ class VendorSignUp extends Component {
       body: data
     })
     .then(res => res.json())
-    .then(res => console.log(res))
+    .then(res => this.props.setProductId(res.productId))
   }
 
   render() {
