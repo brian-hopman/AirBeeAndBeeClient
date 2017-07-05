@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
+import SearchBar from './searchbar'
 
 
 class Apiary extends Component {
@@ -45,23 +48,24 @@ class Apiary extends Component {
       name: resp.name,
       id:resp.id
     })
-    console.log(this.state)
   }
 
   handlesProductState(resp) {
     let content = [resp]
-    debugger
     this.setState({
       productAry: content[0][0].title
     })
-    console.log(this.state)
   }
 
   render() {
     return (
       <div>
+        <SearchBar />
         <h1>{this.state.name}</h1>
         <h1>{this.state.productAry}</h1>
+        <h3>Add {this.state.productAry} to Cart:</h3>
+        <h4 onClick={this.props.setCart}>{this.state.productAry}</h4>
+        <Link to='/cart'>Checkout</Link>
       </div>
     )
   }

@@ -8,6 +8,7 @@ import ApiaryLister from './components/apiary-lister'
 import ThankYou from './components/thank-you-page'
 import Apiary from './components/individual-apiary'
 import ApiaryInfo from './components/apiary-info'
+import Cart from './components/cart'
 
 import './App.css';
 
@@ -24,13 +25,16 @@ class App extends Component {
       //vendor
       vendorId: '',
       //product
-      productId: ''
+      productId: '',
+
+      cart: ''
     }
     this.handlesSearch=this.handlesSearch.bind(this)
     this.setConsumerId=this.setConsumerId.bind(this)
     this.setVendorId=this.setVendorId.bind(this)
     this.setProductId=this.setProductId.bind(this)
     this.handlesClick=this.handlesClick.bind(this)
+    this.setCart=this.setCart.bind(this)
   }
 
   // SEARCH
@@ -55,7 +59,6 @@ class App extends Component {
     this.setState({
       apiaryId: id
     })
-    console.log(this.state.apiaryId)
   }
 
 
@@ -63,23 +66,26 @@ class App extends Component {
     this.setState({
       consumerId: id
     })
-    console.log(this.state.consumerId)
-
   }
 
   setVendorId(id) {
     this.setState({
         vendorId: id
       })
-    console.log(this.state)
     }
 
   setProductId(id) {
     this.setState({
         productId: id
       })
-    console.log(this.state)
     }
+
+  setCart(e) {
+    this.setState({
+      cart: e.target.innerText
+    })
+    console.log(this.state.cart)
+  }
 
   render() {
     console.log(this.state)
@@ -91,8 +97,9 @@ class App extends Component {
             <Route path='/ApiaryLister' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
             <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId} setProductId={this.setProductId}/>}/>
             <Route path='/ThankYou' component={ThankYou} />
-            <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId}/>} />
+            <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart}/>} />
             <Route path='/ApiaryInfo' component={ApiaryInfo} />
+            <Route path='/cart' component={() => <Cart state={this.state}/>} />
           </Switch>
         </BrowserRouter>
       </div>
