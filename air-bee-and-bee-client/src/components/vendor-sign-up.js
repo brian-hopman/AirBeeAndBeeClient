@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 
+import SearchBar from './searchbar'
+
 class VendorSignUp extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       apiaryName: '',
-      productTitle: ''
+      productTitle: '',
+      productImage: ''
     }
 
     this.handlesChange=this.handlesChange.bind(this)
@@ -17,14 +20,15 @@ class VendorSignUp extends Component {
   handlesChange(e) {
     this.setState({
       apiaryName: document.getElementById('apiaryName').value,
-      productTitle: document.getElementById('productTitle').value
+      productTitle: document.getElementById('productTitle').value,
+      productImage: document.getElementById('productImage').value
     })
   }
 
   handlesFormSubmit(e) {
   e.preventDefault()
   let state={
-       name: this.state.apiaryName,
+       name: this.state.apiaryName
       }
 
     let headers = new Headers();
@@ -45,11 +49,12 @@ class VendorSignUp extends Component {
 // THIS DOES THE PRODUCT SUBMIT
   handlesProductFormSubmit(e) {
   e.preventDefault()
-  debugger
+
   let state={
        consumer_id: this.props.appState.consumerId,
        vendor_id: this.props.appState.vendorId,
-       title: this.state.productTitle
+       title: this.state.productTitle,
+       productImage: this.state.productImage
       }
 
     let headers = new Headers();
@@ -67,15 +72,19 @@ class VendorSignUp extends Component {
   render() {
     return (
     <div>
+        <SearchBar />
         <form onSubmit={this.handlesFormSubmit} onChange={this.handlesChange}>
           <label>Name of Apiary:<input type='text' id='apiaryName' value={this.state.apiaryName}></input></label><br/>
           <input type='submit' value='submit'></input>
         </form>
+        <div>
 
-        <form onSubmit={this.handlesProductFormSubmit} onChange={this.handlesChange}>
-          <label>Products:<input type='text' id='productTitle' value={this.state.productTitle}></input></label><br/>
-          <input type='submit' value='submit'></input>
-        </form>
+          <form onSubmit={this.handlesProductFormSubmit} onChange={this.handlesChange}>
+            <label>Products:<input type='text' id='productTitle' value={this.state.productTitle}></input></label><br/>
+            <label>Product Image:<input type='image' id='productImage' value={this.state.productTitle}></input></label><br/>
+            <input type='submit' value='submit'></input>
+          </form>
+        </div>
      </div>
     )
   }
