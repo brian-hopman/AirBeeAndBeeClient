@@ -11,13 +11,15 @@ class Apiary extends Component {
     this.state = {
       name: '',
       id: '',
-      productAry: []
+      productAry: [],
+      productName: '',
+      productImage: "http://www.chicagointernalcleansing.com/wp-content/uploads/2014/10/honeyjar.jpg"
     }
   }
 
   getsIndividulApiary() {
       let id = JSON.stringify(this.props.apiaryId)
-      fetch(`http://localhost:3000/vendors/${this.props.apiaryId}`, {
+      fetch(`http://localhost:3000/vendors/${window.location.href.split('/')[4]}`, {
                    method: 'GET',
                    headers: id,
                    mode: 'cors',
@@ -28,7 +30,7 @@ class Apiary extends Component {
   }
 
   getsProducts() {
-    fetch(`http://localhost:3000/products/${this.props.apiaryId}`, {
+    fetch(`http://localhost:3000/products/${window.location.href.split('/')[4]}`, {
                  method: 'GET',
                  headers: '',
                  mode: 'cors',
@@ -46,14 +48,17 @@ class Apiary extends Component {
   handlesState(resp) {
     this.setState({
       name: resp.name,
-      id:resp.id
+      id: resp.id
     })
   }
 
   handlesProductState(resp) {
+
+
     let content = [resp]
     this.setState({
-      productAry: content[0][0].title
+      productName: content[0][0].title,
+      productImage: content[0][0].product_image
     })
   }
 
@@ -62,9 +67,10 @@ class Apiary extends Component {
       <div>
         <SearchBar />
         <h1>{this.state.name}</h1>
-        <h1>{this.state.productAry}</h1>
+        <h1>{this.state.productName}</h1>
+        <img alt='' src={this.state.productImage}></img>
         <h3>Add {this.state.productAry} to Cart:</h3>
-        <h4 onClick={this.props.setCart}>{this.state.productAry}</h4>
+        <h4 onClick={this.props.setCart}>{this.state.productName}</h4>
         <Link to='/cart'>Checkout</Link>
       </div>
     )
