@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
+import { Input, Form } from 'semantic-ui-react'
 
 
 
@@ -59,13 +60,17 @@ class SignInUpForm extends Component {
 
  render(){
    return (
-     <form onSubmit={this.handlesFormSubmit}>
+     <Form onSubmit={this.handlesFormSubmit}>
+      <Form.Field>
         <label>First Name:<input type='text' id='firstName' onChange={this.handleFormState} ></input></label><br/>
+      </Form.Field>
         <label>Last Name:<input type='text' id='lastName' onChange={this.handleFormState} ></input></label><br/>
+      <Form.Field>
         <label>Email:<input type='text' id='email' onChange={this.handleFormState}></input></label><br/>
+      </Form.Field>  
         <label>Is This a Vendor Account?:<input type='checkbox' id='isVendor' onChange={this.handleFormState}></input></label><br/>
-        <input type='submit' value='submit'></input>
-     </form>
+        <Input type='submit' value='submit'></Input>
+     </Form>
     )
   }
 }

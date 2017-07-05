@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { List } from 'semantic-ui-react'
 
 import Apiary from './individual-apiary'
 
@@ -32,10 +33,9 @@ class ApiaryLister extends Component {
   render() {
     return (
       <div>
-      <p>heelo</p>
-        <ul>
-          {this.state.vendors.map((obj) => <li><Link to={`/Apiary/${obj.id}`} key={obj.id} onClick={this.props.handlesClick}>{obj.name}</Link></li>)}
-        </ul>
+        <div className="ui list">
+          {this.state.vendors.map((obj) => <div className='item'><Link to={`/Apiary/${obj.id}`} key={obj.id} onClick={this.props.handlesClick}>{obj.name}</Link></div>)}
+        </div>
       </div>
     )
   }

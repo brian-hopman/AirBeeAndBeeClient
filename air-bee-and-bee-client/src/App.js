@@ -91,17 +91,17 @@ class App extends Component {
     console.log(this.state)
     return (
       <div className="App">
-        <BrowserRouter>
-          <Switch>
-            <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
-            <Route path='/ApiaryLister' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
-            <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId} setProductId={this.setProductId}/>}/>
-            <Route path='/ThankYou' component={ThankYou} />
-            <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart}/>} />
-            <Route path='/ApiaryInfo' component={ApiaryInfo} />
-            <Route path='/cart' component={() => <Cart state={this.state}/>} />
-          </Switch>
-        </BrowserRouter>
+          <BrowserRouter>
+            <Switch>
+              <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
+              <Route path='/ApiaryLister' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
+              <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId} setProductId={this.setProductId}/>}/>
+              <Route path='/ThankYou' component={ThankYou} />
+              <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart}/>} />
+              <Route path='/ApiaryInfo' component={ApiaryInfo} />
+              <Route path='/cart' component={() => <Cart state={this.state}/>} />
+            </Switch>
+          </BrowserRouter>
       </div>
     );
   }
