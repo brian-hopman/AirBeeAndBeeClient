@@ -6,8 +6,8 @@ import SignInUpForm from '../components/sign-in-up-form'
 import SearchBar from '../components/searchbar'
 
 class HomeContainer extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
 
   }
@@ -26,13 +26,14 @@ class HomeContainer extends Component {
   render() {
     return (
       <div>
-      <SearchBar searchTerm={this.props.searchTerm} handlesSearch={this.props.handlesSearch}/>
-      <h1>a</h1>
-      <Link to='vendorSignUp'>Sign Up</Link>
-      <SignInUpForm setConsumerId={this.props.setConsumerId} state={this.props.state} handlesFormSubmit={this.props.handlesFormSubmit} appState={this.props.appState}/>
-      <Link to='ApiaryLister'>Our Apiaries</Link>
+            <SearchBar searchTerm={this.props.searchTerm} handlesSearch={this.props.handlesSearch}/>
+            <h1>a</h1>
+            <Link to='vendorSignUp'>Sign Up</Link>
+            <SignInUpForm setConsumerId={this.props.setConsumerId} state={this.props.state} handlesFormSubmit={this.props.handlesFormSubmit} appState={this.props.appState}/>
+            <Link to='ApiaryLister'>Our Apiaries</Link>
       </div>
     )
   }
 }
+//<BrowserRouter???>
 export default HomeContainer

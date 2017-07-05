@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button } from 'semantic-ui-react'
 
 import SearchBar from './searchbar'
 
@@ -82,7 +83,8 @@ class VendorSignUp extends Component {
           <form onSubmit={this.handlesProductFormSubmit} onChange={this.handlesChange}>
             <label>Products:<input type='text' id='productTitle' value={this.state.productTitle}></input></label><br/>
             <label>Product Image:<input type='text' id='productImage' value={this.state.productImage}></input></label><br/>
-            <input type='submit' value='submit'></input>
+
+            <Button primary type='submit' value='submit'></Button>
           </form>
         </div>
      </div>
