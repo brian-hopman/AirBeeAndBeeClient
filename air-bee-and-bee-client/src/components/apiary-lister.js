@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { List, Image } from 'semantic-ui-react'
 
 import Apiary from './individual-apiary'
@@ -11,6 +11,7 @@ class ApiaryLister extends Component {
     this.state = {
       vendors: []
     }
+    this.redirectsToApiary=this.redirectsToApiary.bind(this)
   }
 
   componentDidMount() {
@@ -29,22 +30,30 @@ class ApiaryLister extends Component {
       vendors: data}))
   }
 
+  redirectsToApiary(e, apiary) {
+    this.props.history.push('/ThankYou')
+  }
+
 
   render() {
+    debugger
     return (
       <div>
         <div className="ui list">
-          {this.state.vendors.map((obj) =>
-            <div className='item'><Image
-              src='http://www.well-beingsecrets.com/wp-content/uploads/honey-caugh-supressant.jpg'
-              as='a' size='medium'
-              href='http://google.com'
-              target='_blank'/>
-            </div>)}
+          {this.state.vendors.map((apiary) =>
+            <div>
+              <Image
+                key={apiary.id}
+                onClick={this.redirectsToApiary}
+                src={apiary.apiary_image}
+                as='a' size='medium'/>
+              <Link to={`/apiary/${apiary.id}`}>{apiary.name}</Link>
+            </div>
+            )}
         </div>
       </div>
     )
   }
 }
 
-export default ApiaryLister
+export default withRouter(ApiaryLister)

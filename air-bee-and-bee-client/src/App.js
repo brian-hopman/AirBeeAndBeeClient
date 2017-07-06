@@ -37,7 +37,6 @@ class App extends Component {
     this.setVendorId=this.setVendorId.bind(this)
     this.setProductId=this.setProductId.bind(this)
     this.handlesClick=this.handlesClick.bind(this)
-    this.setCart=this.setCart.bind(this)
   }
 
   // SEARCH
@@ -83,19 +82,13 @@ class App extends Component {
       })
     }
 
-  // setProductInCartId(e) {
-  //   debugger
-  //   this.setState({
-  //       productInCartId: e
-  //     })
-  //   }
 
-  setCart(e) {
-    this.setState({
-      cart: e.target.innerText
-    })
-    console.log(this.state.cart)
-  }
+  // setCart(e) {
+  //   this.setState({
+  //     cart: e.target.innerText
+  //   })
+  //   document.cookie = document.cookie + '$' + e
+  // }
 
   render() {
     console.log(this.state)
@@ -108,7 +101,7 @@ class App extends Component {
               <Route path='/ApiaryLister' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
               <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId} setProductId={this.setProductId}/>}/>
               <Route path='/ThankYou' component={ThankYou} />
-              <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart}/>} />
+              <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId}/>} />
               <Route path='/ApiaryInfo' component={ApiaryInfo} />
               <Route path='/cart' component={() => <Cart state={this.state}/>}/>
             </Switch>

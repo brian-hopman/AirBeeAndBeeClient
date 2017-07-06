@@ -9,6 +9,7 @@ class VendorSignUp extends Component {
 
     this.state = {
       apiaryName: '',
+      apiaryImage: '',
       productTitle: '',
       productImage: ''
     }
@@ -21,6 +22,7 @@ class VendorSignUp extends Component {
   handlesChange(e) {
     this.setState({
       apiaryName: document.getElementById('apiaryName').value,
+      apiaryImage: document.getElementById('apiaryImage').value,
       productTitle: document.getElementById('productTitle').value,
       productImage: document.getElementById('productImage').value
     })
@@ -29,7 +31,8 @@ class VendorSignUp extends Component {
   handlesFormSubmit(e) {
   e.preventDefault()
   let state={
-       name: this.state.apiaryName
+       name: this.state.apiaryName,
+       apiary_image: this.state.apiaryImage
       }
 
     let headers = new Headers();
@@ -54,6 +57,7 @@ class VendorSignUp extends Component {
   let state={
        consumer_id: this.props.appState.consumerId,
        vendor_id: this.props.appState.vendorId,
+       vendor_image: this.state.apiaryImage,
        title: this.state.productTitle,
        product_image: this.state.productImage
       }
@@ -76,6 +80,7 @@ class VendorSignUp extends Component {
 
           <form onSubmit={this.handlesFormSubmit} onChange={this.handlesChange}>
             <label>Name of Apiary:<input type='text' id='apiaryName' value={this.state.apiaryName}></input></label><br/>
+            <label>Imaged of Apiary:<input type='text' id='apiaryImage' value={this.state.apiaryImage}></input></label><br/>
             <Button primary type='submit'>Submit</Button>
           </form>
 
