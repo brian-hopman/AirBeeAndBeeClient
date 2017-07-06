@@ -15,19 +15,32 @@ class SearchBar extends Component {
 
     this.redirectsToCart=this.redirectsToCart.bind(this)
     this.redirectsApiaryLister=this.redirectsApiaryLister.bind(this)
+    this.getCookie=this.getCookie.bind(this)
   }
 
   redirectsToCart() {
     this.props.history.push('/cart')
-    this.forceUpdate()
   }
 
   redirectsApiaryLister() {
     this.props.history.push('/ApiaryLister')
-    this.setState({
-      ye: 'ne'
-    })
   }
+
+  getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
+
 
 
   render() {
@@ -40,6 +53,7 @@ class SearchBar extends Component {
         <Search aligned='right' placeholder='search...' value={this.props.searchTerm} onChange={this.props.handlesSearch}   />
 
         <h2 className='ui header'>Air Bee And Bee</h2>
+        <h2>  Welcome {this.getCookie('money')}</h2>
       </Menu>
       </div>
     )

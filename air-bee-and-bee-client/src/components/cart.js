@@ -8,6 +8,7 @@ class Cart extends Component {
     super(props)
 
     this.redirectsToThankYou=this.redirectsToThankYou.bind(this)
+    this.getCookie=this.getCookie.bind(this)
   }
 
   handlesProductFormSubmit(e) {
@@ -35,11 +36,28 @@ class Cart extends Component {
   }
 
 
+  getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
+
+
   render() {
     console.log(this.props.state)
     return (
 
       <div>
+      <h2>Purchase {this.getCookie('money')}</h2>
         <form onSubmit={this.redirectsToThankYou}>
           <label>Credit Card Number:<input type='text' id='CCinfo' ></input></label><br/>
           <Button animated='fade'>
@@ -47,7 +65,7 @@ class Cart extends Component {
               Checkout
             </Button.Content>
             <Button.Content hidden>
-              Price
+              Purchase {document.cookie}
             </Button.Content>
           </Button>
         </form>

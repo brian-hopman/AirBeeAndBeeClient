@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import SearchBar from './searchbar'
 
@@ -15,6 +15,38 @@ class Apiary extends Component {
       productId: '',
       productImage: ""
     }
+
+    this.deleteCookie = this.deleteCookie.bind(this)
+    this.setCookie = this.setCookie.bind(this)
+    this.getCookie = this.getCookie.bind(this)
+  }
+
+
+  setCookie() {
+    var d = new Date();
+    d.setTime(d.getTime() + (100 * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = 'productId' + "=" + this.state.productId + ";" + expires + ";path=/";
+    console.log(document.cookie)
+    }
+
+  getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
+
+  deleteCookie( name ) {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
 
 
@@ -53,15 +85,15 @@ class Apiary extends Component {
   }
 
   handlesProductState(resp) {
-
-
     let content = [resp]
     this.setState({
+      productAry: resp,
       productName: content[0][0].title,
       productImage: content[0][0].product_image,
       productId:content[0][0].id
     })
   }
+
 
   render() {
     return (
@@ -69,10 +101,10 @@ class Apiary extends Component {
         <h1>{this.state.name}</h1>
         <h1>{this.state.productName}</h1>
         <img alt='' src={this.state.productImage}></img>
-        <input type='submit' onClick={this.props.setCart} onClick={this.props.setProductInCartId} value='Add to Cart'></input>
+        <input type='submit' onClick={this.setCookie} value='Add to Cart'></input>
       </div>
     )
   }
 }
 
-export default Apiary
+export default withRouter(Apiary)

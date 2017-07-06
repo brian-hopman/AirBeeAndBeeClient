@@ -17,7 +17,7 @@ class SignInUpForm extends Component {
       firstName: '',
       lastName: '',
       email: '',
-      vendorAccount: ''
+      vendorAccount: false
   }
   this.handlesFormSubmit = this.handlesFormSubmit.bind(this)
   this.handleFormState = this.handleFormState.bind(this)
@@ -45,20 +45,27 @@ class SignInUpForm extends Component {
    })
    .then( resp => resp.json() )
    .then( data => {this.props.setConsumerId(data.consumerId)} )
+   this.setsCookie()
    this.redirectsToVendorSignUp()
  }
+
+ setsCookie() {
+   var name = document.getElementById('firstName').value + '$' + document.getElementById('lastName').value
+   document.cookie = name
+ }
+
 
  handleFormState() {
    this.setState({
      firstName: document.getElementById('firstName').value,
      lastName: document.getElementById('lastName').value,
      email: document.getElementById('email').value,
-     vendorAccount: true
+     vendorAccount: !this.state.vendorAccount
    })
-   console.log(this.state)
  }
 
  render(){
+   console.log(this.state)
    return (
      <div className="ui raised very padded text container segment">
        <Form onSubmit={this.handlesFormSubmit}>
