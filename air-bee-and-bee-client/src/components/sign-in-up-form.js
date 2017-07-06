@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
-import { Input, Form } from 'semantic-ui-react'
+import { Input, Form, Checkbox } from 'semantic-ui-react'
 
 
 
@@ -53,24 +53,26 @@ class SignInUpForm extends Component {
      firstName: document.getElementById('firstName').value,
      lastName: document.getElementById('lastName').value,
      email: document.getElementById('email').value,
-     vendorAccount: document.getElementById('isVendor').checked
+     vendorAccount: true
    })
    console.log(this.state)
  }
 
  render(){
    return (
-     <Form onSubmit={this.handlesFormSubmit}>
-      <Form.Field>
-        <label>First Name:<input type='text' id='firstName' onChange={this.handleFormState} ></input></label><br/>
-      </Form.Field>
-        <label>Last Name:<input type='text' id='lastName' onChange={this.handleFormState} ></input></label><br/>
-      <Form.Field>
-        <label>Email:<input type='text' id='email' onChange={this.handleFormState}></input></label><br/>
-      </Form.Field>  
-        <label>Is This a Vendor Account?:<input type='checkbox' id='isVendor' onChange={this.handleFormState}></input></label><br/>
-        <Input type='submit' value='submit'></Input>
-     </Form>
+     <div className="ui raised very padded text container segment">
+       <Form onSubmit={this.handlesFormSubmit}>
+        <Form.Field>
+          <label>First Name:<input type='text' id='firstName' onChange={this.handleFormState} ></input></label><br/>
+        </Form.Field>
+          <label>Last Name:<input type='text' id='lastName' onChange={this.handleFormState} ></input></label><br/>
+        <Form.Field>
+          <label>Email:<input type='text' id='email' onChange={this.handleFormState}></input></label><br/>
+        </Form.Field>
+          <label>Is This a Vendor Account?:<Checkbox toggle id='isVendor' onChange={this.handleFormState}/></label><br/>
+          <Input type='submit' value='submit'></Input>
+       </Form>
+      </div>
     )
   }
 }

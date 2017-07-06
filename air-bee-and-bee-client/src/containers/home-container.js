@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom'
 
 
 import SignInUpForm from '../components/sign-in-up-form'
@@ -8,7 +10,6 @@ import SearchBar from '../components/searchbar'
 class HomeContainer extends Component {
   constructor(props) {
     super(props)
-
 
   }
 
@@ -23,12 +24,10 @@ class HomeContainer extends Component {
   // }
 
 
+
   render() {
     return (
       <div>
-            <SearchBar searchTerm={this.props.searchTerm} handlesSearch={this.props.handlesSearch}/>
-            <h1>a</h1>
-            <Link to='vendorSignUp'>Sign Up</Link>
             <SignInUpForm setConsumerId={this.props.setConsumerId} state={this.props.state} handlesFormSubmit={this.props.handlesFormSubmit} appState={this.props.appState}/>
             <Link to='ApiaryLister'>Our Apiaries</Link>
       </div>
@@ -36,4 +35,4 @@ class HomeContainer extends Component {
   }
 }
 //<BrowserRouter???>
-export default HomeContainer
+export default withRouter(HomeContainer)

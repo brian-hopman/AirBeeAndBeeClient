@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom'
+
 import { Switch, Route } from 'react-router-dom'
 
 import HomeContainer from './containers/home-container'
@@ -9,6 +9,7 @@ import ThankYou from './components/thank-you-page'
 import Apiary from './components/individual-apiary'
 import ApiaryInfo from './components/apiary-info'
 import Cart from './components/cart'
+import SearchBar from './components/searchbar'
 
 import './App.css';
 
@@ -27,7 +28,9 @@ class App extends Component {
       //product
       productId: '',
 
-      cart: ''
+      cart: '',
+
+      productInCartId: ''
     }
     this.handlesSearch=this.handlesSearch.bind(this)
     this.setConsumerId=this.setConsumerId.bind(this)
@@ -80,6 +83,13 @@ class App extends Component {
       })
     }
 
+  // setProductInCartId(e) {
+  //   debugger
+  //   this.setState({
+  //       productInCartId: e
+  //     })
+  //   }
+
   setCart(e) {
     this.setState({
       cart: e.target.innerText
@@ -91,7 +101,8 @@ class App extends Component {
     console.log(this.state)
     return (
       <div className="App">
-          <BrowserRouter>
+          <SearchBar handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm}/>
+
             <Switch>
               <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
               <Route path='/ApiaryLister' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
@@ -99,9 +110,9 @@ class App extends Component {
               <Route path='/ThankYou' component={ThankYou} />
               <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart}/>} />
               <Route path='/ApiaryInfo' component={ApiaryInfo} />
-              <Route path='/cart' component={() => <Cart state={this.state}/>} />
+              <Route path='/cart' component={() => <Cart state={this.state}/>}/>
             </Switch>
-          </BrowserRouter>
+
       </div>
     );
   }

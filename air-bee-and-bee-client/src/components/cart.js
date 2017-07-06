@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
 import { Input, Button } from 'semantic-ui-react'
 
+
 class Cart extends Component {
   constructor(props) {
     super(props)
@@ -35,10 +36,10 @@ class Cart extends Component {
 
 
   render() {
-
+    console.log(this.props.state)
     return (
+
       <div>
-        <h1>Your Purchase:{this.props.state.cart}</h1>
         <form onSubmit={this.redirectsToThankYou}>
           <label>Credit Card Number:<input type='text' id='CCinfo' ></input></label><br/>
           <Button animated='fade'>

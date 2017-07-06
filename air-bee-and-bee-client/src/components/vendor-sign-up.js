@@ -72,21 +72,23 @@ class VendorSignUp extends Component {
 
   render() {
     return (
-    <div>
-        <SearchBar />
-        <form onSubmit={this.handlesFormSubmit} onChange={this.handlesChange}>
-          <label>Name of Apiary:<input type='text' id='apiaryName' value={this.state.apiaryName}></input></label><br/>
-          <input type='submit' value='submit'></input>
-        </form>
-        <div>
+    <div className="ui raised very padded text container segment">
+
+          <form onSubmit={this.handlesFormSubmit} onChange={this.handlesChange}>
+            <label>Name of Apiary:<input type='text' id='apiaryName' value={this.state.apiaryName}></input></label><br/>
+            <Button primary type='submit'>Submit</Button>
+          </form>
+
+          <br></br>
 
           <form onSubmit={this.handlesProductFormSubmit} onChange={this.handlesChange}>
             <label>Products:<input type='text' id='productTitle' value={this.state.productTitle}></input></label><br/>
+            <br></br>
             <label>Product Image:<input type='text' id='productImage' value={this.state.productImage}></input></label><br/>
 
-            <Button primary type='submit' value='submit'></Button>
+            <Button primary type='submit'>Submit</Button>
           </form>
-        </div>
+
      </div>
     )
   }
