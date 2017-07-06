@@ -10,12 +10,13 @@ class Apiary extends Component {
 
     this.state = {
       name: '',
-      id: '',
       productAry: [],
       productName: '',
-      productImage: "http://www.chicagointernalcleansing.com/wp-content/uploads/2014/10/honeyjar.jpg"
+      productId: '',
+      productImage: ""
     }
   }
+
 
   getsIndividulApiary() {
       let id = JSON.stringify(this.props.apiaryId)
@@ -48,7 +49,6 @@ class Apiary extends Component {
   handlesState(resp) {
     this.setState({
       name: resp.name,
-      id: resp.id
     })
   }
 
@@ -58,20 +58,18 @@ class Apiary extends Component {
     let content = [resp]
     this.setState({
       productName: content[0][0].title,
-      productImage: content[0][0].product_image
+      productImage: content[0][0].product_image,
+      productId:content[0][0].id
     })
   }
 
   render() {
     return (
       <div>
-        <SearchBar />
         <h1>{this.state.name}</h1>
         <h1>{this.state.productName}</h1>
         <img alt='' src={this.state.productImage}></img>
-        <h3>Add {this.state.productAry} to Cart:</h3>
-        <h4 onClick={this.props.setCart}>{this.state.productName}</h4>
-        <Link to='/cart'>Checkout</Link>
+        <input type='submit' onClick={this.props.setCart} onClick={this.props.setProductInCartId} value='Add to Cart'></input>
       </div>
     )
   }
