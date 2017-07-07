@@ -8,9 +8,6 @@ class SearchBar extends Component {
   constructor(props) {
     super(props)
 
-    this.state={
-      ye:''
-    }
 
 
     this.redirectsToCart=this.redirectsToCart.bind(this)
