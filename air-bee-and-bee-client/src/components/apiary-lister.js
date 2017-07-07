@@ -36,7 +36,6 @@ class ApiaryLister extends Component {
 
 
   render() {
-    debugger
     return (
       <div>
         <div className="ui list">
