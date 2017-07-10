@@ -10,6 +10,7 @@ import Apiary from './components/individual-apiary'
 import ApiaryInfo from './components/apiary-info'
 import Cart from './components/cart'
 import SearchBar from './components/searchbar'
+import AddProduct from './components/add-product'
 
 import './App.css';
 
@@ -28,7 +29,9 @@ class App extends Component {
       //product
       productId: '',
 
-      cart: '',
+      cart: [],
+
+      productAry: [],
 
       productInCartId: ''
     }
@@ -37,16 +40,21 @@ class App extends Component {
     this.setVendorId=this.setVendorId.bind(this)
     this.setProductId=this.setProductId.bind(this)
     this.handlesClick=this.handlesClick.bind(this)
+    this.setCookie=this.setCookie.bind(this)
+    //this.setCart=this.setCart.bind(this)
+    this.addToCart = this.addToCart.bind(this)
+    //this.handlesProductAry=this.handlesProductAry.bind(this)
   }
 
   // SEARCH
 
   handlesSearch(event) {
+    debugger
     this.setState({
       searchTerm: event.target.value
     })
 
-    fetch(`http://localhost:3000/consumers/show/${this.state.searchTerm}`, { method: 'GET',
+    fetch(`http://localhost:3000/products/show/${this.state.searchTerm}`, { method: 'GET',
                  headers: '',
                  mode: 'cors',
                  cache: 'default' }
@@ -61,6 +69,7 @@ class App extends Component {
     this.setState({
       apiaryId: id
     })
+    this.setCookie('apiaryId', id)
   }
 
 
@@ -68,27 +77,57 @@ class App extends Component {
     this.setState({
       consumerId: id
     })
+    this.setCookie('consumerId', id)
   }
 
   setVendorId(id) {
     this.setState({
         vendorId: id
       })
-    }
+    this.setCookie('vendorId', id)
+  }
 
   setProductId(id) {
     this.setState({
         productId: id
       })
+    this.setCookie('productId', id)
+  }
+
+  // handlesProductAry(resp) {
+  //   //debugger
+  //   this.setState({
+  //     productAry: resp
+  //   })
+  // }
+
+  addToCart(event) {
+    let productInformaiton = JSON.parse(event.target.dataset.product)
+
+      this.setState(
+        {cart: [...this.state.cart,productInformaiton]}
+      )
     }
 
+  setCookie(name, id) {
+    var d = new Date();
+    d.setTime(d.getTime() + (100 * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = name + "=" + id + ";" + expires + ";path=/";
+    console.log(document.cookie)
+  }
 
-  // setCart(e) {
-  //   this.setState({
-  //     cart: e.target.innerText
-  //   })
-  //   document.cookie = document.cookie + '$' + e
+  // shouldComponentUpdate(nextProps,nextState) {
+  //   debugger
+  //   let array1 = this.state.productAry
+  //   let array2 = nextState.productAry
+  //   if (array1.length == array2.length) {
+  //     return false
+  //   } else {
+  //     return true
+  //   }
   // }
+
 
   render() {
     console.log(this.state)
@@ -99,11 +138,12 @@ class App extends Component {
             <Switch>
               <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
               <Route path='/ApiaryLister' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
-              <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId} setProductId={this.setProductId}/>}/>
+              <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId}/>}/>
               <Route path='/ThankYou' component={ThankYou} />
-              <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId}/>} />
+              <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart} addToCart={this.addToCart}/>} />
               <Route path='/ApiaryInfo' component={ApiaryInfo} />
-              <Route path='/cart' component={() => <Cart state={this.state}/>}/>
+              <Route path='/cart' component={() => <Cart cart={this.state.cart}/>}/>
+              <Route path='/AddProduct' component={() => <AddProduct appState={this.state}  setProductId={this.setProductId}/>}/>
             </Switch>
 
       </div>

@@ -12,6 +12,8 @@ class SearchBar extends Component {
 
     this.redirectsToCart=this.redirectsToCart.bind(this)
     this.redirectsApiaryLister=this.redirectsApiaryLister.bind(this)
+    this.redirectsToHome=this.redirectsToHome.bind(this)
+    this.redirectsToAddProduct=this.redirectsToAddProduct.bind(this)
     this.getCookie=this.getCookie.bind(this)
   }
 
@@ -22,6 +24,16 @@ class SearchBar extends Component {
   redirectsApiaryLister() {
     this.props.history.push('/ApiaryLister')
   }
+
+  redirectsToHome() {
+    this.props.history.push('/home')
+  }
+
+  redirectsToAddProduct() {
+    this.props.history.push('/AddProduct')
+  }
+
+
 
   getCookie(cname) {
     var name = cname + "=";
@@ -40,15 +52,18 @@ class SearchBar extends Component {
 
 
 
+
   render() {
     return (
       <div>
       <Menu secondary>
-        <Menu.Item name='Cart' onClick={this.redirectsToCart}/>
         <Menu.Item name='Our Apiaries' onClick={this.redirectsApiaryLister}/>
+        <Menu.Item name= 'Home' onClick={this.redirectsToHome}/>
 
-        <Search aligned='right' placeholder='search...' value={this.props.searchTerm} onChange={this.props.handlesSearch}   />
+        <Search aligned='right' placeholder='search...' value={this.props.searchTerm} onChange={console.log('asdasd')}   />
 
+        <Menu.Item name='add-product' onClick={this.redirectsToAddProduct}/>
+        <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
         <h2 className='ui header'>Air Bee And Bee</h2>
         <h2>  Welcome {this.getCookie('money')}</h2>
       </Menu>

@@ -7,27 +7,30 @@ class Cart extends Component {
   constructor(props) {
     super(props)
 
+
     this.redirectsToThankYou=this.redirectsToThankYou.bind(this)
     this.getCookie=this.getCookie.bind(this)
+    this.handlesTransactionSubmit=this.handlesTransactionSubmit.bind(this)
   }
 
-  handlesProductFormSubmit(e) {
+  handlesTransactionSubmit(e) {
     e.preventDefault()
     this.redirectsToThankYou()
-    // let state={
-    //       cart: 'asd'
-    //     }
-    //
-    // let headers = new Headers();
-    // headers.set('Content-Type', 'application/json');
-    // let data = JSON.stringify(state)
-    // fetch('http://localhost:3000/transactions', {
-    //   method: 'POST',
-    //   headers: headers,
-    //   body: data
-    // })
-    // .then(res => res.json())
-    // .then(res => this.props.setProductId(res.productId))
+    let state={
+          cart: this.state.cart.map(item => item)
+        }
+
+    let headers = new Headers();
+    headers.set('Content-Type', 'application/json');
+    let data = JSON.stringify(state)
+    debugger
+    fetch('http://localhost:3000/transactions', {
+      method: 'POST',
+      headers: headers,
+      body: data
+    })
+    .then(res => res.json())
+    .then(res => this.props.setProductId(res.productId))
   }
 
 
@@ -51,17 +54,44 @@ class Cart extends Component {
     return "";
   }
 
+  fetchesProducts() {
+    fetch('http://localhost:3000/products/', {
+      method: 'GET',
+      headers: '',
+      mode: 'cors',
+      cache: 'default'
+    })
+    .then(resp => resp.json())
+    .then(data => this.setState({
+      vendors: data}))
+  }
+
+  mapsCart() {
+    let yourCart = this.props.id.map(item => {
+      debugger
+      return (
+        <h3>
+        {item}
+        </h3>
+      )
+    })
+    return yourCart
+  }
+
+
 
   render() {
-    console.log(this.props.state)
     return (
 
       <div>
       <h2>Purchase {this.getCookie('money')}</h2>
+        <div>
+          {this.mapsCart()}
+        </div>
         <form onSubmit={this.redirectsToThankYou}>
           <label>Credit Card Number:<input type='text' id='CCinfo' ></input></label><br/>
           <Button animated='fade'>
-            <Button.Content visible>
+            <Button.Content visible onClick={this.handlesProductFormSubmit}>
               Checkout
             </Button.Content>
             <Button.Content hidden>

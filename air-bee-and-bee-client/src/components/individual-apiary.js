@@ -5,49 +5,52 @@ import SearchBar from './searchbar'
 
 
 class Apiary extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       name: '',
       productAry: [],
-      productName: '',
-      productId: '',
-      productImage: ""
+      cart: []
     }
 
-    this.deleteCookie = this.deleteCookie.bind(this)
-    this.setCookie = this.setCookie.bind(this)
-    this.getCookie = this.getCookie.bind(this)
+    // this.deleteCookie = this.deleteCookie.bind(this)
+    // this.setCookie = this.setCookie.bind(this)
+    // this.getCookie = this.getCookie.bind(this)
+    this.handlesProductAry = this.handlesProductAry.bind(this)
+    this.getsProducts = this.getsProducts.bind(this)
+    //this.setCart = this.setCart.bind(this)
+    this.rendersAllProducts = this.rendersAllProducts.bind(this)
   }
 
 
-  setCookie() {
-    var d = new Date();
-    d.setTime(d.getTime() + (100 * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = 'productId' + "=" + this.state.productId + ";" + expires + ";path=/";
-    console.log(document.cookie)
-    }
+  // setCookie() {
+  //   var d = new Date();
+  //   d.setTime(d.getTime() + (100 * 24 * 60 * 60 * 1000));
+  //   var expires = "expires="+d.toUTCString();
+  //   document.cookie = 'productId' + "=" + this.state.productId + ";" + expires + ";path=/";
+  //   console.log(document.cookie)
+  //   }
+  //
+  // getCookie(cname) {
+  //   var name = cname + "=";
+  //   var ca = document.cookie.split(';');
+  //   for(var i = 0; i < ca.length; i++) {
+  //       var c = ca[i];
+  //       while (c.charAt(0) == ' ') {
+  //           c = c.substring(1);
+  //       }
+  //       if (c.indexOf(name) == 0) {
+  //           return c.substring(name.length, c.length);
+  //       }
+  //   }
+  //   return "";
+  // }
 
-  getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-  }
+  // deleteCookie( name ) {
+  //   document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  // }
 
-  deleteCookie( name ) {
-    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-  }
 
 
   getsIndividulApiary() {
@@ -62,6 +65,7 @@ class Apiary extends Component {
       .then(resp => this.handlesState(resp))
   }
 
+  //need to get apiary id into state in app, then fetch from there
   getsProducts() {
     fetch(`http://localhost:3000/products/${window.location.href.split('/')[4]}`, {
                  method: 'GET',
@@ -70,8 +74,9 @@ class Apiary extends Component {
                  cache: 'default' }
           )
     .then(resp => resp.json())
-    .then(resp => this.handlesProductState(resp))
+    .then(resp => this.handlesProductAry(resp))
   }
+
 
   componentDidMount() {
     this.getsIndividulApiary()
@@ -80,28 +85,50 @@ class Apiary extends Component {
 
   handlesState(resp) {
     this.setState({
-      name: resp.name,
+      name: resp.name
     })
   }
 
-  handlesProductState(resp) {
-    let content = [resp]
+  handlesProductAry(resp) {
     this.setState({
-      productAry: resp,
-      productName: content[0][0].title,
-      productImage: content[0][0].product_image,
-      productId:content[0][0].id
+      productAry: resp
     })
   }
+
+  // setCart(product) {
+  //   this.setState((prevState) => {
+  //     return {cart: prevState.cart + product.id}
+  //   })
+  //   console.log(this.state.cart)
+  // }
+
+
+  rendersAllProducts() {
+
+
+    let allProducts = this.state.productAry.map(product => {
+    let id = product.id
+
+        return (
+            <div key={product.id}>
+              <h1>{product.title}</h1>
+              <img alt='' src={product.product_image}></img>
+              <input data-product={JSON.stringify(product)} type='button' onClick={this.props.addToCart} id={id} value='Add to Cart'></input>
+            </div>
+        )
+      })
+    return allProducts
+  }
+
 
 
   render() {
+
     return (
       <div>
         <h1>{this.state.name}</h1>
-        <h1>{this.state.productName}</h1>
-        <img alt='' src={this.state.productImage}></img>
-        <input type='submit' onClick={this.setCookie} value='Add to Cart'></input>
+        {this.rendersAllProducts()}
+
       </div>
     )
   }

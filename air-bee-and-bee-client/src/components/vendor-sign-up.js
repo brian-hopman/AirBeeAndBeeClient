@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
 
 import SearchBar from './searchbar'
 
@@ -23,13 +24,10 @@ class VendorSignUp extends Component {
     this.setState({
       apiaryName: document.getElementById('apiaryName').value,
       apiaryImage: document.getElementById('apiaryImage').value,
-      productTitle: document.getElementById('productTitle').value,
-      productImage: document.getElementById('productImage').value
     })
   }
 
-  handlesFormSubmit(e) {
-  e.preventDefault()
+  handlesFormSubmit() {
   let state={
        name: this.state.apiaryName,
        apiary_image: this.state.apiaryImage
@@ -45,14 +43,17 @@ class VendorSignUp extends Component {
     })
     .then(res => res.json())
     .then(res => this.props.setVendorId(res.vendorId))
+    this.props.history.push('/home')
   }
 
 
 
 
+
 // THIS DOES THE PRODUCT SUBMIT
-  handlesProductFormSubmit(e) {
-  e.preventDefault()
+  handlesProductFormSubmit() {
+    debugger
+
 
   let state={
        consumer_id: this.props.appState.consumerId,
@@ -74,6 +75,8 @@ class VendorSignUp extends Component {
     .then(res => this.props.setProductId(res.productId))
   }
 
+
+
   render() {
     return (
     <div className="ui raised very padded text container segment">
@@ -84,19 +87,9 @@ class VendorSignUp extends Component {
             <Button primary type='submit'>Submit</Button>
           </form>
 
-          <br></br>
-
-          <form onSubmit={this.handlesProductFormSubmit} onChange={this.handlesChange}>
-            <label>Products:<input type='text' id='productTitle' value={this.state.productTitle}></input></label><br/>
-            <br></br>
-            <label>Product Image:<input type='text' id='productImage' value={this.state.productImage}></input></label><br/>
-
-            <Button primary type='submit'>Submit</Button>
-          </form>
-
      </div>
     )
   }
 }
 
-export default VendorSignUp
+export default withRouter(VendorSignUp)

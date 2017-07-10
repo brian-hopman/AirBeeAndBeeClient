@@ -54,13 +54,19 @@ class SignInUpForm extends Component {
    document.cookie = name
  }
 
+ isVendorAccount() {
+   console.log(document.getElementById('isVendor').value)
+   return document.getElementById('isVendor').value == 'on' ? true : false
+ }
+
 
  handleFormState() {
    this.setState({
      firstName: document.getElementById('firstName').value,
      lastName: document.getElementById('lastName').value,
      email: document.getElementById('email').value,
-     vendorAccount: !this.state.vendorAccount
+     //still needs fixing
+     vendorAccount: this.isVendorAccount()
    })
  }
 
@@ -76,7 +82,10 @@ class SignInUpForm extends Component {
         <Form.Field>
           <label>Email:<input type='text' id='email' onChange={this.handleFormState}></input></label><br/>
         </Form.Field>
-          <label>Is This a Vendor Account?:<Checkbox toggle id='isVendor' onChange={this.handleFormState}/></label><br/>
+        <div className="ui checkbox">
+          <input type="checkbox" id='isVendor' onChange={this.handleFormState}/>
+          <label>Is this a vendor account?</label>
+        </div>
           <Input type='submit' value='submit'></Input>
        </Form>
       </div>

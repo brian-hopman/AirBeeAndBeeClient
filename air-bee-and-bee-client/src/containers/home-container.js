@@ -29,7 +29,6 @@ class HomeContainer extends Component {
     return (
       <div>
             <SignInUpForm setConsumerId={this.props.setConsumerId} state={this.props.state} handlesFormSubmit={this.props.handlesFormSubmit} appState={this.props.appState}/>
-            <Link to='ApiaryLister'>Our Apiaries</Link>
       </div>
     )
   }
