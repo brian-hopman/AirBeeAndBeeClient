@@ -60,12 +60,15 @@ class SearchBar extends Component {
         <Menu.Item name='Our Apiaries' onClick={this.redirectsApiaryLister}/>
         <Menu.Item name= 'Home' onClick={this.redirectsToHome}/>
 
-        <Search aligned='right' placeholder='search...' value={this.props.searchTerm} onChange={console.log('asdasd')}   />
+        <div className="ui search">
+          <input className="prompt" type="text" placeholder="search..." value={this.props.searchTerm} onChange={this.props.handlesSearch}></input>
+          <div className="results" value={this.props.resultsAry}></div>
+        </div>
 
         <Menu.Item name='add-product' onClick={this.redirectsToAddProduct}/>
         <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
         <h2 className='ui header'>Air Bee And Bee</h2>
-        <h2>  Welcome {this.getCookie('money')}</h2>
+        <h2>  Welcome {this.getCookie('username')}</h2>
       </Menu>
       </div>
     )

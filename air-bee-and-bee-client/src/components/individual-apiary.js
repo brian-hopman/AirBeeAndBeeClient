@@ -23,6 +23,47 @@ class Apiary extends Component {
     this.rendersAllProducts = this.rendersAllProducts.bind(this)
   }
 
+      //Mock the existance of a state
+    //this.state = []
+    //Mock the existance of the cart object
+    //this.state.cart = {}
+    //Mock a setState function
+  //  this.setState = (nextState) => ( this.state.cart = Object.assign({},this.state.cart,nextState) )
+
+    newCart = (item) => {
+      let prevCart = this.state.cart
+      //Function to calculate the product quanity
+      let productQuantity = () => (prevCart[item.id] ? (prevCart[item.id].q + 1) : (1))
+      //Initially set the cart and set the quantity to the existing quantity + 1 or null plus 1 which will equal 1
+      let cartItem = {[item.id]:{q:productQuantity(),d:item.desc}}
+      //set the new state
+      this.setState(cartItem)
+    }
+
+    //Structure of a product
+    // let item = {id:1,desc:'Honey from the Flatiron School, kind of sweet but very reactive'}
+    // let item2 = {id:2,desc:'Redux honey, predictible taste but assumes a lot of react'}
+
+    //Start from an emtphy cart and add one item
+  //  cart1 = newCart(item)
+    //console.log(`Cart with one item`)
+    //console.log(this.state.cart[item.id])
+
+    //add and existing item
+    //console.log(`Cart with one item but increased quantity`)
+    //cart2 = newCart(item)
+    //console.log(this.state.cart[item.id])
+
+    //add a new item
+    // console.log(`Cart with two items`)
+    // cart3 = newCart(item2)
+    // cart3 = newCart(item2)
+    // cart3 = newCart(item2)
+    // cart3 = newCart(item2)
+    // console.log(this.state.cart[item.id])
+    // console.log(this.state.cart[item2.id])
+
+
 
   // setCookie() {
   //   var d = new Date();

@@ -67,11 +67,12 @@ class Cart extends Component {
   }
 
   mapsCart() {
-    let yourCart = this.props.id.map(item => {
+    let yourCart = this.props.cart.map(item => {
       debugger
       return (
         <h3>
-        {item}
+        {item.title}
+        <img src={item.product_image}></img>
         </h3>
       )
     })

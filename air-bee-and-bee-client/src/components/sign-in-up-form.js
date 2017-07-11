@@ -43,15 +43,20 @@ class SignInUpForm extends Component {
      headers: headers,
      body: data
    })
-   .then( resp => resp.json() )
-   .then( data => {this.props.setConsumerId(data.consumerId)} )
-   this.setsCookie()
+   .then( resp => resp.json())
+   .then( data => {
+     this.props.setConsumerId(data.consumerId)
+     this.setCookie(data.firstName)
+   })
    this.redirectsToVendorSignUp()
  }
 
- setsCookie() {
-   var name = document.getElementById('firstName').value + '$' + document.getElementById('lastName').value
-   document.cookie = name
+ setCookie(name) {
+   debugger
+     var d = new Date();
+     d.setTime(d.getTime() + (1*24*60*60*1000));
+     var expires = "expires="+ d.toUTCString();
+     document.cookie = 'username' + "=" + name + ";" + expires + ";path=/";
  }
 
  isVendorAccount() {
@@ -71,7 +76,6 @@ class SignInUpForm extends Component {
  }
 
  render(){
-   console.log(this.state)
    return (
      <div className="ui raised very padded text container segment">
        <Form onSubmit={this.handlesFormSubmit}>
