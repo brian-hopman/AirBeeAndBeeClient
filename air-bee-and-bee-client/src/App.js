@@ -22,6 +22,8 @@ class App extends Component {
       apiaryId: '',
       //search
       searchTerm: '',
+
+      resultsAry: [],
       //consumer
       consumerId: '',
       //vendor
@@ -32,8 +34,6 @@ class App extends Component {
       cart: [],
 
       productAry: [],
-
-      productInCartId: ''
     }
     this.handlesSearch=this.handlesSearch.bind(this)
     this.setConsumerId=this.setConsumerId.bind(this)
@@ -43,24 +43,31 @@ class App extends Component {
     this.setCookie=this.setCookie.bind(this)
     //this.setCart=this.setCart.bind(this)
     this.addToCart = this.addToCart.bind(this)
+    this.newCart = this.newCart.bind(this)
     //this.handlesProductAry=this.handlesProductAry.bind(this)
   }
 
   // SEARCH
 
   handlesSearch(event) {
-    debugger
     this.setState({
       searchTerm: event.target.value
     })
 
-    fetch(`http://localhost:3000/products/show/${this.state.searchTerm}`, { method: 'GET',
+    fetch(`http://localhost:3000/products/search/${this.state.searchTerm}`, { method: 'GET',
                  headers: '',
                  mode: 'cors',
                  cache: 'default' }
           )
     .then(resp => resp.json())
-    .then(resp => console.log(resp))
+    .then(resp => this.setsResultsAry(resp))
+  }
+
+  setsResultsAry(resp) {
+    this.setState({
+      resultsAry: resp
+    })
+    console.log(this.state.resultsAry)
   }
 
   handlesClick(event) {
@@ -91,7 +98,6 @@ class App extends Component {
     this.setState({
         productId: id
       })
-    this.setCookie('productId', id)
   }
 
   // handlesProductAry(resp) {
@@ -101,12 +107,26 @@ class App extends Component {
   //   })
   // }
 
-  addToCart(event) {
-    let productInformaiton = JSON.parse(event.target.dataset.product)
+  newCart(item) {
+    //Get current state
+    let prevState = this.state.cart
+    //Determine product quantity
+    let productQuantity = () => (prevState[`HoneyId-${item.id}`] ? (prevState[item.id].q + 1) : (1))
+    //Initially set the cart and set the quantity to the existing quantity + 1 or null plus 1 which will equal 1
+    let cartItem = {[`HoneyId-${item.id}`]:{q:productQuantity(),d:item.title}}
+    //Determine the next value of cart
+    let nextCart = Object.assign( {},prevState,cartItem )
+    //set the new state
+    this.setState({
+      cart: nextCart
+    })
+  }
 
-      this.setState(
-        {cart: [...this.state.cart,productInformaiton]}
-      )
+  addToCart(event) {
+    let item = JSON.parse(event.target.dataset.product)
+
+    this.newCart(item)
+    console.log(this.state.cart)
     }
 
   setCookie(name, id) {
@@ -130,10 +150,9 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <div className="App">
-          <SearchBar handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm}/>
+          <SearchBar handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} resultsAry={this.state.resultsAry}/>
 
             <Switch>
               <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
