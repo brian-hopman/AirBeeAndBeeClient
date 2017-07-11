@@ -44,6 +44,7 @@ class App extends Component {
     //this.setCart=this.setCart.bind(this)
     this.addToCart = this.addToCart.bind(this)
     this.newCart = this.newCart.bind(this)
+    this.displaysSearchResult = this.displaysSearchResult.bind(this)
     //this.handlesProductAry=this.handlesProductAry.bind(this)
   }
 
@@ -68,6 +69,11 @@ class App extends Component {
       resultsAry: resp
     })
     console.log(this.state.resultsAry)
+  }
+
+  displaysSearchResult() {
+    debugger
+    document.getElementById('results').map(result => {debugger})
   }
 
   handlesClick(event) {
@@ -152,17 +158,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          <SearchBar handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} resultsAry={this.state.resultsAry}/>
+          <SearchBar handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} resultsAry={this.state.resultsAry} displaysSearchResult={this.displaysSearchResult}/>
 
             <Switch>
-              <Route path='/home' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
-              <Route path='/ApiaryLister' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
+              <Route path='/signUp' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
               <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId}/>}/>
               <Route path='/ThankYou' component={ThankYou} />
               <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart} addToCart={this.addToCart}/>} />
               <Route path='/ApiaryInfo' component={ApiaryInfo} />
               <Route path='/cart' component={() => <Cart cart={this.state.cart}/>}/>
               <Route path='/AddProduct' component={() => <AddProduct appState={this.state}  setProductId={this.setProductId}/>}/>
+              <Route path='/' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
             </Switch>
 
       </div>

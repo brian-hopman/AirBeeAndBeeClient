@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { Search, Grid, Header, Menu } from 'semantic-ui-react'
+import { Search, Grid, Header, Menu, Dropdown } from 'semantic-ui-react'
 
 import ApiaryLister from './apiary-lister'
 
@@ -11,10 +11,13 @@ class SearchBar extends Component {
 
 
     this.redirectsToCart=this.redirectsToCart.bind(this)
+    this.redirectsToSignUp=this.redirectsToSignUp.bind(this)
     this.redirectsApiaryLister=this.redirectsApiaryLister.bind(this)
     this.redirectsToHome=this.redirectsToHome.bind(this)
     this.redirectsToAddProduct=this.redirectsToAddProduct.bind(this)
     this.getCookie=this.getCookie.bind(this)
+    this.deleteCookie=this.deleteCookie.bind(this)
+    this.checksForUsername=this.checksForUsername.bind(this)
   }
 
   redirectsToCart() {
@@ -22,7 +25,7 @@ class SearchBar extends Component {
   }
 
   redirectsApiaryLister() {
-    this.props.history.push('/ApiaryLister')
+    this.props.history.push('/')
   }
 
   redirectsToHome() {
@@ -31,6 +34,10 @@ class SearchBar extends Component {
 
   redirectsToAddProduct() {
     this.props.history.push('/AddProduct')
+  }
+
+  redirectsToSignUp() {
+    this.props.history.push('/SignUp')
   }
 
 
@@ -50,6 +57,16 @@ class SearchBar extends Component {
     return "";
   }
 
+  deleteCookie( name ) {
+    document.cookie = 'username' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    this.props.history.push('/')
+  }
+
+  checksForUsername() {
+    return this.getCookie('username') ? `Welcome ${this.getCookie('username')}` : false
+  }
+
+
 
 
 
@@ -57,18 +74,22 @@ class SearchBar extends Component {
     return (
       <div>
       <Menu secondary>
-        <Menu.Item name='Our Apiaries' onClick={this.redirectsApiaryLister}/>
+
+        <Menu.Item name='Sign Up' onClick={this.redirectsToSignUp}/>
         <Menu.Item name= 'Home' onClick={this.redirectsToHome}/>
 
-        <div className="ui search">
-          <input className="prompt" type="text" placeholder="search..." value={this.props.searchTerm} onChange={this.props.handlesSearch}></input>
-          <div className="results" value={this.props.resultsAry}></div>
-        </div>
+        <Search
+            results={this.props.resultsAry}
+            placeholder='search'
+            onSearchChange={this.props.handlesSearch}
+            value={this.props.searchTerm}
+          />
 
         <Menu.Item name='add-product' onClick={this.redirectsToAddProduct}/>
         <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
+        <Menu.Item name='Log Out' onClick={this.deleteCookie}/>
         <h2 className='ui header'>Air Bee And Bee</h2>
-        <h2>  Welcome {this.getCookie('username')}</h2>
+        <h4> {this.checksForUsername()}</h4>
       </Menu>
       </div>
     )
