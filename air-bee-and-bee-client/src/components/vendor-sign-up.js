@@ -43,7 +43,7 @@ class VendorSignUp extends Component {
     })
     .then(res => res.json())
     .then(res => this.props.setVendorId(res.vendorId))
-    this.props.history.push('/home')
+    this.props.history.push('/AddProduct')
   }
 
 
