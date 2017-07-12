@@ -139,7 +139,7 @@ class App extends Component {
     //Determine product quantity
     let productQuantity = () => (prevState[`HoneyId-${item.id}`] ? (prevState[`HoneyId-${item.id}`].q + 1) : (1))
     //Initially set the cart and set the quantity to the existing quantity + 1 or null plus 1 which will equal 1
-    let cartItem = {[`HoneyId-${item.id}`]:{q:productQuantity(),d:item.title, p:item.price}}
+    let cartItem = {[`HoneyId-${item.id}`]:{q:productQuantity(),d:item.title, p:item.price, pic:item.product_image}}
     //Determine the next value of cart
     let nextCart = Object.assign( {},prevState,cartItem )
     //set the new state

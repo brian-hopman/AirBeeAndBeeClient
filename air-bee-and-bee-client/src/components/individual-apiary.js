@@ -74,20 +74,20 @@ class Apiary extends Component {
   //   console.log(document.cookie)
   //   }
   //
-  // getCookie(cname) {
-  //   var name = cname + "=";
-  //   var ca = document.cookie.split(';');
-  //   for(var i = 0; i < ca.length; i++) {
-  //       var c = ca[i];
-  //       while (c.charAt(0) == ' ') {
-  //           c = c.substring(1);
-  //       }
-  //       if (c.indexOf(name) == 0) {
-  //           return c.substring(name.length, c.length);
-  //       }
-  //   }
-  //   return "";
-  // }
+  getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
 
   // deleteCookie( name ) {
   //   document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -147,24 +147,23 @@ class Apiary extends Component {
 
   rendersAllProducts() {
 
+    let button=''
 
     let allProducts = this.state.productAry.map(product => {
     let id = product.id
 
+    if (this.getCookie('username') != '') {
+      button = <button data-product={JSON.stringify(product)} onClick={this.props.addToCart} id={id} className="ui yellow basic button">Add to cart</button>
+    }
+
         return (
-            <div key={product.id}>
-              <h1>{product.title}</h1>
+            <div className='apiary' key={product.id}>
+              <h1 className='product-name'>{product.title}</h1>
               <Image
                 key={product.id}
                 src={product.product_image}
                 as='a' size='large'/><br/><br/>
-
-                <button data-product={JSON.stringify(product)} onClick={this.props.addToCart} id={id} className="ui yellow basic button">Add to cart</button>
-
-
-
-
-
+                {button}
             </div>
         )
       })
@@ -177,7 +176,7 @@ class Apiary extends Component {
 
     return (
       <div>
-        <h1>{this.state.name}</h1>
+        <h1 className='apiary-name'>{this.state.name}</h1>
         {this.rendersAllProducts()}
 
       </div>

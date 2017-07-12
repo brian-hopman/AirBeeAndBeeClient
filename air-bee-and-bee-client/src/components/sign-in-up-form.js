@@ -63,14 +63,16 @@ class SignInUpForm extends Component {
  }
 
 
- handleFormState() {
+ handleFormState(event, data) {
+
    this.setState({
      firstName: document.getElementById('firstName').value,
      lastName: document.getElementById('lastName').value,
      email: document.getElementById('email').value,
      //still needs fixing
-     vendorAccount: this.isVendorAccount()
+     vendorAccount: event.target.checked
    })
+   console.log(this.state)
  }
 
  render(){

@@ -59,9 +59,9 @@ class SearchBar extends Component {
   }
 
   deleteCookie( name ) {
-    document.cookie = 'username' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    document.cookie = 'vendorId' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    document.cookie = 'consumerId' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "vendorId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "consumerId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     this.props.history.push('/')
   }
 

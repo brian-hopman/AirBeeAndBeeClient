@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
-import { Input, Button } from 'semantic-ui-react'
+import { Input, Button, Image } from 'semantic-ui-react'
 
 
 class Cart extends Component {
@@ -85,7 +85,10 @@ class Cart extends Component {
     return (
       results.map(item =>
         (
+          <div>
+          <Image src={item.pic} as='a' size='small'/>
           <li>{item.d} x {item.q}</li>
+          </div>
         )
       )
     )
@@ -96,7 +99,7 @@ class Cart extends Component {
     return (
 
       <div>
-      <h2>Purchase {this.getCookie('money')}</h2>
+      <h2>Your Cart</h2>
         <div>
           {this.mapsCart()}
         </div>
