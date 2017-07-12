@@ -11,6 +11,7 @@ class Cart extends Component {
     this.redirectsToThankYou=this.redirectsToThankYou.bind(this)
     this.getCookie=this.getCookie.bind(this)
     this.handlesTransactionSubmit=this.handlesTransactionSubmit.bind(this)
+    this.mapsCart=this.mapsCart.bind(this)
   }
 
   handlesTransactionSubmit(e) {
@@ -66,19 +67,29 @@ class Cart extends Component {
       vendors: data}))
   }
 
-  mapsCart() {
-    let yourCart = this.props.cart.map(item => {
-      debugger
-      return (
-        <h3>
-        {item.title}
-        <img src={item.product_image}></img>
-        </h3>
-      )
-    })
-    return yourCart
+  showObject(obj) {
+    var results = [];
+      for (var p in obj) {
+        if( obj.hasOwnProperty(p) ) {
+          results.push(obj[p])
+        }
+      }
+    return results;
   }
 
+
+
+  mapsCart() {
+    let results = this.showObject(this.props.cart)
+
+    return (
+      results.map(item =>
+        (
+          <li>{item.d} x {item.q}</li>
+        )
+      )
+    )
+  }
 
 
   render() {
@@ -96,7 +107,7 @@ class Cart extends Component {
               Checkout
             </Button.Content>
             <Button.Content hidden>
-              Purchase {document.cookie}
+              $ {this.props.price}
             </Button.Content>
           </Button>
         </form>

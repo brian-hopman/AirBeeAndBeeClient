@@ -9,7 +9,8 @@ class ApiaryLister extends Component {
     super(props)
 
     this.state = {
-      vendors: []
+      vendors: [],
+      mounted:true
     }
     this.redirectsToApiary=this.redirectsToApiary.bind(this)
   }
@@ -18,16 +19,49 @@ class ApiaryLister extends Component {
     this.getsVendors()
   }
 
+  componentWillUnmount() {    
+    this.cancelablePromise.cancel()
+    //this.state.mounted = false
+  }
+
   getsVendors() {
-    fetch('http://localhost:3000/vendors/', {
-      method: 'GET',
-      headers: '',
-      mode: 'cors',
-      cache: 'default'
-    })
+    var makeCancelable = (promise) => {
+  let hasCanceled_ = false;
+
+  const wrappedPromise = new Promise((resolve, reject) => {
+    promise.then(
+      val => hasCanceled_ ? reject({isCanceled: true}) : resolve(val),
+      error => hasCanceled_ ? reject({isCanceled: true}) : reject(error)
+    );
+  });
+
+  return {
+    promise: wrappedPromise,
+    cancel() {
+      hasCanceled_ = true;
+    },
+  };
+};
+
+    this.cancelablePromise = makeCancelable(
+      fetch('http://localhost:3000/vendors/', {
+        method: 'GET',
+        headers: '',
+        mode: 'cors',
+        cache: 'default'
+      })
+    )
+
+
+    this.cancelablePromise.promise
     .then(resp => resp.json())
-    .then(data => this.setState({
-      vendors: data}))
+    .then(data => {
+      if (this.state.mounted == true) {
+        this.setState({
+          vendors: data})
+      }
+    })
+    console.log(this)
   }
 
   redirectsToApiary(e, apiary) {
