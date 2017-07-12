@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
+import { Image, Button } from 'semantic-ui-react'
 
 import SearchBar from './searchbar'
 
@@ -153,8 +154,17 @@ class Apiary extends Component {
         return (
             <div key={product.id}>
               <h1>{product.title}</h1>
-              <img alt='' src={product.product_image}></img>
-              <input data-product={JSON.stringify(product)} type='button' onClick={this.props.addToCart} id={id} value='Add to Cart'></input>
+              <Image
+                key={product.id}
+                src={product.product_image}
+                as='a' size='large'/><br/><br/>
+
+                <button data-product={JSON.stringify(product)} onClick={this.props.addToCart} id={id} className="ui yellow basic button">Add to cart</button>
+
+
+
+
+
             </div>
         )
       })

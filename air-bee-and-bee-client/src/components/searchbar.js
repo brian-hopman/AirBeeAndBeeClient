@@ -60,6 +60,8 @@ class SearchBar extends Component {
 
   deleteCookie( name ) {
     document.cookie = 'username' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'vendorId' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'consumerId' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     this.props.history.push('/')
   }
 
@@ -76,18 +78,34 @@ class SearchBar extends Component {
 
 
   render() {
-    let signup
-    let addProduct
-    if (!document.cookie.includes('username')) {
+    let signup = ''
+    let addProduct = ''
+    let welcomeMessage = ''
+    let logout = ''
+    let cart = ''
+
+    let isUser = document.cookie.includes('username')
+    let isLoggedIn = document.cookie.includes('username') || document.cookie.includes('vendorId')
+    let isVendor = document.cookie.includes('vendorId')
+
+    if (!isLoggedIn) {
        signup = <Menu.Item name='Sign Up' onClick={this.redirectsToSignUp}/>
-    } else {
-       signup = ''
     }
 
-    if (document.cookie.includes('vendorId')) {
+    if ( isVendor ) {
        addProduct = <Menu.Item name='add product' className='hidden content' onClick={this.redirectsToAddProduct}/>
-    } else {
-       addProduct = ''
+    }
+
+    if ( isLoggedIn ) {
+      logout = <Menu.Item name='Logout' onClick={this.deleteCookie}/>
+    }
+
+    if ( isUser ) {
+      welcomeMessage = <Menu.Item name={this.checksForUsername()}/>
+    }
+
+    if ( isLoggedIn ) {
+      cart = <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
     }
 
     return (
@@ -96,8 +114,9 @@ class SearchBar extends Component {
         {signup}
         <Menu.Item name= 'Air Bee And Bee' onClick={this.redirectsToHome}/>
         {addProduct}
-        <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
-        <Menu.Item name={this.checksForUsername()}/>
+        {cart}
+        {welcomeMessage}
+        {logout}
         <Search className="search-bar"
             results={this.props.resultsAry}
             onResultSelect={this.handleResultSelect}

@@ -19,7 +19,7 @@ class ApiaryLister extends Component {
     this.getsVendors()
   }
 
-  componentWillUnmount() {    
+  componentWillUnmount() {
     this.cancelablePromise.cancel()
     //this.state.mounted = false
   }
@@ -65,24 +65,29 @@ class ApiaryLister extends Component {
   }
 
   redirectsToApiary(e, apiary) {
-    this.props.history.push('/ThankYou')
+
   }
 
 
   render() {
     return (
       <div>
+
         <div className="ui list">
           {this.state.vendors.map((apiary) =>
-            <div>
+            <Link to={`/apiary/${apiary.id}`}>
+            <div className="apiary-listing">
               <Image
                 key={apiary.id}
                 onClick={this.redirectsToApiary}
                 src={apiary.apiary_image}
                 as='a' size='medium'/>
-              <Link to={`/apiary/${apiary.id}`}>{apiary.name}</Link>
+                <div className='apiary-description-container'><h1 className='apiary-name'>{apiary.name}</h1></div>
             </div>
+
+            </Link>
             )}
+
         </div>
       </div>
     )

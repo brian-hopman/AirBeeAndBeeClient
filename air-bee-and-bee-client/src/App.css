@@ -11,6 +11,29 @@
   height: 700px;
 }
 
+.apiary-listing {
+  padding:20px;
+  margin:auto;
+  width: 70%;
+  text-align: left;
+}
+
+/*.add-to-cart {
+  padding:10px;
+  background:red;
+  border-radius: 5px;
+}*/
+
+.apiary-description-container {
+  float:right;
+  width: 460px;
+}
+
+h1.apiary-name {
+  text-align: center;
+  color:#7B3809;
+}
+
 .search-bar {
   margin-left: auto;
 }

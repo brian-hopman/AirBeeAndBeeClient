@@ -80,7 +80,6 @@ class VendorSignUp extends Component {
   render() {
     return (
     <div className="ui raised very padded text container segment">
-
           <form onSubmit={this.handlesFormSubmit} onChange={this.handlesChange}>
             <label>Name of Apiary:<input type='text' id='apiaryName' value={this.state.apiaryName}></input></label><br/>
             <label>Imaged of Apiary:<input type='text' id='apiaryImage' value={this.state.apiaryImage}></input></label><br/>
