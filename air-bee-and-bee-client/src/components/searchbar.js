@@ -76,27 +76,36 @@ class SearchBar extends Component {
 
 
   render() {
+    let signup
+    let addProduct
+    if (!document.cookie.includes('username')) {
+       signup = <Menu.Item name='Sign Up' onClick={this.redirectsToSignUp}/>
+    } else {
+       signup = ''
+    }
+
+    if (document.cookie.includes('vendorId')) {
+       addProduct = <Menu.Item name='add product' className='hidden content' onClick={this.redirectsToAddProduct}/>
+    } else {
+       addProduct = ''
+    }
+
     return (
       <div>
-      <Menu secondary >
-
-        <Menu.Item name='Sign Up' onClick={this.redirectsToSignUp}/>
-        <Menu.Item name= 'Home' onClick={this.redirectsToHome}/>
-
-        <Search
-            results={this.props.resultsAry}
-            onResultSelect={this.handleResultSelect}
-            placeholder='search'
-            onSearchChange={this.props.handlesSearch}
-            value={this.props.searchTerm}
-          />
-
-        <Menu.Item name='add product' className='hidden content' onClick={this.redirectsToAddProduct}/>
+      <Menu>
+        {signup}
+        <Menu.Item name= 'Air Bee And Bee' onClick={this.redirectsToHome}/>
+        {addProduct}
         <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
-        <Menu.Item name='Log Out' onClick={this.deleteCookie}/>
-        <h2 className='ui header'>Air Bee And Bee</h2>
-        <h4>{this.checksForUsername()}</h4>
+        <Menu.Item name={this.checksForUsername()}/>
       </Menu>
+      <Search
+          results={this.props.resultsAry}
+          onResultSelect={this.handleResultSelect}
+          placeholder='search'
+          onSearchChange={this.props.handlesSearch}
+          value={this.props.searchTerm}
+        />
       </div>
     )
   }
