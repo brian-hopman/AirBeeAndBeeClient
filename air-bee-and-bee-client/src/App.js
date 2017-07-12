@@ -182,13 +182,13 @@ class App extends Component {
           <SearchBar handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} resultsAry={this.state.resultsAry} displaysSearchResult={this.displaysSearchResult}/>
 
             <Switch>
+              <Route path='/AddProduct' component={() => <AddProduct appState={this.state}  setProductId={this.setProductId}/>}/>
               <Route path='/signUp' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
               <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId}/>}/>
               <Route path='/ThankYou' component={ThankYou} />
               <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart} addToCart={this.addToCart}/>} />
               <Route path='/ApiaryInfo' component={ApiaryInfo} />
               <Route path='/cart' component={() => <Cart cart={this.state.cart} setsPrice={this.setsPrice} price={this.state.price}/>}/>
-              <Route path='/AddProduct' component={() => <AddProduct appState={this.state}  setProductId={this.setProductId}/>}/>
               <Route path='/' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
             </Switch>
 

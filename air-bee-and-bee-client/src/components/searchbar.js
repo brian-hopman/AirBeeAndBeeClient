@@ -91,7 +91,7 @@ class SearchBar extends Component {
             value={this.props.searchTerm}
           />
 
-        <Menu.Item name='add-product' onClick={this.redirectsToAddProduct}/>
+        <Menu.Item name='add product' className='hidden content' onClick={this.redirectsToAddProduct}/>
         <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
         <Menu.Item name='Log Out' onClick={this.deleteCookie}/>
         <h2 className='ui header'>Air Bee And Bee</h2>

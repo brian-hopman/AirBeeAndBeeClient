@@ -100,17 +100,29 @@ class Cart extends Component {
         <div>
           {this.mapsCart()}
         </div>
-        <form onSubmit={this.redirectsToThankYou}>
-          <label>Credit Card Number:<input type='text' id='CCinfo' ></input></label><br/>
-          <Button animated='fade'>
-            <Button.Content visible onClick={this.handlesProductFormSubmit}>
-              Checkout
-            </Button.Content>
-            <Button.Content hidden>
-              $ {this.props.price}
-            </Button.Content>
-          </Button>
-        </form>
+        <div className="ui raised very padded text container segment">
+          <form onSubmit={this.redirectsToThankYou}>
+            <label>Ship To<input type='text' id='shippingAddress' ></input></label><br/>
+            <label>Shipping Address<input type='text' id='shippingAddress' ></input></label><br/>
+            <label>City<input type='text' id='city' ></input></label><br/>
+            <label>State<input type='text' id='city' ></input></label><br/>
+            <label>Zip<input type='text' id='CCinfo' ></input></label><br/>
+            <br/>
+            <br/>
+            <br/>
+            <label>Credit Card Number<input type='text' id='CCinfo' ></input></label><br/>
+            <label>Security Code<input type='text' id='CCinfo' ></input></label><br/>
+            <label>Expiration Date<input type='text' id='CCinfo' ></input></label><br/>
+            <Button primary animated='fade'>
+              <Button.Content visible onClick={this.handlesProductFormSubmit}>
+                Checkout
+              </Button.Content>
+              <Button.Content hidden>
+                $ {this.props.price}
+              </Button.Content>
+            </Button>
+          </form>
+        </div>
       </div>
     )
   }

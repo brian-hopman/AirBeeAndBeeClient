@@ -79,6 +79,7 @@ class AddProduct extends Component {
   render() {
     return (
         <div className="ui raised very padded text container segment">
+
               <form onSubmit={this.handlesProductFormSubmit} onChange={this.handlesChange}>
                 <label>Products:<input type='text' id='productTitle' value={this.state.productTitle}></input></label><br/>
                 <br></br>
@@ -94,6 +95,7 @@ class AddProduct extends Component {
 
                 <Button primary type='submit'>Submit</Button>
               </form>
+      
         </div>
       )
   }
