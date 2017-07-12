@@ -181,6 +181,7 @@ class App extends Component {
       <div className="App">
           <SearchBar handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} resultsAry={this.state.resultsAry} displaysSearchResult={this.displaysSearchResult}/>
 
+            <div className="store-container">
             <Switch>
               <Route path='/AddProduct' component={() => <AddProduct appState={this.state}  setProductId={this.setProductId}/>}/>
               <Route path='/signUp' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
@@ -191,6 +192,7 @@ class App extends Component {
               <Route path='/cart' component={() => <Cart cart={this.state.cart} setsPrice={this.setsPrice} price={this.state.price}/>}/>
               <Route path='/' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
             </Switch>
+            </div>
 
       </div>
     );

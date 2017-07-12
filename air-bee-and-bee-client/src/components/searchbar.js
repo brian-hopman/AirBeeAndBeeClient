@@ -98,14 +98,15 @@ class SearchBar extends Component {
         {addProduct}
         <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
         <Menu.Item name={this.checksForUsername()}/>
+        <Search className="search-bar"
+            results={this.props.resultsAry}
+            onResultSelect={this.handleResultSelect}
+            placeholder='search'
+            onSearchChange={this.props.handlesSearch}
+            value={this.props.searchTerm}
+          />
       </Menu>
-      <Search
-          results={this.props.resultsAry}
-          onResultSelect={this.handleResultSelect}
-          placeholder='search'
-          onSearchChange={this.props.handlesSearch}
-          value={this.props.searchTerm}
-        />
+
       </div>
     )
   }
