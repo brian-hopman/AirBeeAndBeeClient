@@ -18,6 +18,7 @@ class SearchBar extends Component {
     this.getCookie=this.getCookie.bind(this)
     this.deleteCookie=this.deleteCookie.bind(this)
     this.checksForUsername=this.checksForUsername.bind(this)
+    this.handleResultSelect=this.handleResultSelect.bind(this)
   }
 
   redirectsToCart() {
@@ -66,6 +67,10 @@ class SearchBar extends Component {
     return this.getCookie('username') ? `Welcome ${this.getCookie('username')}` : false
   }
 
+  handleResultSelect(e, result) {
+    this.props.history.push(`/Apiary/${result.vendor_id}`)
+  }
+
 
 
 
@@ -73,13 +78,14 @@ class SearchBar extends Component {
   render() {
     return (
       <div>
-      <Menu secondary>
+      <Menu secondary >
 
         <Menu.Item name='Sign Up' onClick={this.redirectsToSignUp}/>
         <Menu.Item name= 'Home' onClick={this.redirectsToHome}/>
 
         <Search
             results={this.props.resultsAry}
+            onResultSelect={this.handleResultSelect}
             placeholder='search'
             onSearchChange={this.props.handlesSearch}
             value={this.props.searchTerm}
@@ -89,7 +95,7 @@ class SearchBar extends Component {
         <Menu.Item name='Your Cart' onClick={this.redirectsToCart}/>
         <Menu.Item name='Log Out' onClick={this.deleteCookie}/>
         <h2 className='ui header'>Air Bee And Bee</h2>
-        <h4> {this.checksForUsername()}</h4>
+        <h4>{this.checksForUsername()}</h4>
       </Menu>
       </div>
     )

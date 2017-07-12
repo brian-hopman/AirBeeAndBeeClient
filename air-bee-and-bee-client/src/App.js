@@ -34,6 +34,8 @@ class App extends Component {
       cart: [],
 
       productAry: [],
+
+      price: 0
     }
     this.handlesSearch=this.handlesSearch.bind(this)
     this.setConsumerId=this.setConsumerId.bind(this)
@@ -44,7 +46,7 @@ class App extends Component {
     //this.setCart=this.setCart.bind(this)
     this.addToCart = this.addToCart.bind(this)
     this.newCart = this.newCart.bind(this)
-    this.displaysSearchResult = this.displaysSearchResult.bind(this)
+    this.setsPrice = this.setsPrice.bind(this)
     //this.handlesProductAry=this.handlesProductAry.bind(this)
   }
 
@@ -55,7 +57,7 @@ class App extends Component {
       searchTerm: event.target.value
     })
 
-    fetch(`http://localhost:3000/products/search/${this.state.searchTerm}`, { method: 'GET',
+    fetch(`http://localhost:3000/products/search/${event.target.value}`, { method: 'GET',
                  headers: '',
                  mode: 'cors',
                  cache: 'default' }
@@ -71,10 +73,6 @@ class App extends Component {
     console.log(this.state.resultsAry)
   }
 
-  displaysSearchResult() {
-    debugger
-    document.getElementById('results').map(result => {debugger})
-  }
 
   handlesClick(event) {
     let ary = event.target.href.split('/')
@@ -87,10 +85,13 @@ class App extends Component {
 
 
   setConsumerId(id) {
+    debugger
     this.setState({
       consumerId: id
     })
     this.setCookie('consumerId', id)
+    console.log(this.state.consumerId)
+    console.log(document.cookie)
   }
 
   setVendorId(id) {
@@ -113,19 +114,40 @@ class App extends Component {
   //   })
   // }
 
+  setsPrice() {
+    var results = [];
+    let price = 0
+    let obj = this.state.cart
+
+    for (var p in obj) {
+      if( obj.hasOwnProperty(p) ) {
+        results.push(obj[p])
+      }
+    }
+
+    results.forEach((item, i, arr) => (
+      price += item.p * item.q
+      )
+    )
+
+    this.setState({price})
+  }
+
   newCart(item) {
     //Get current state
     let prevState = this.state.cart
     //Determine product quantity
     let productQuantity = () => (prevState[`HoneyId-${item.id}`] ? (prevState[`HoneyId-${item.id}`].q + 1) : (1))
     //Initially set the cart and set the quantity to the existing quantity + 1 or null plus 1 which will equal 1
-    let cartItem = {[`HoneyId-${item.id}`]:{q:productQuantity(),d:item.title}}
+    let cartItem = {[`HoneyId-${item.id}`]:{q:productQuantity(),d:item.title, p:item.price}}
     //Determine the next value of cart
     let nextCart = Object.assign( {},prevState,cartItem )
     //set the new state
     this.setState({
       cart: nextCart
     })
+
+    this.setsPrice()
   }
 
   addToCart(event) {
@@ -140,7 +162,6 @@ class App extends Component {
     d.setTime(d.getTime() + (100 * 24 * 60 * 60 * 1000));
     var expires = "expires="+d.toUTCString();
     document.cookie = name + "=" + id + ";" + expires + ";path=/";
-    console.log(document.cookie)
   }
 
   // shouldComponentUpdate(nextProps,nextState) {
@@ -166,7 +187,7 @@ class App extends Component {
               <Route path='/ThankYou' component={ThankYou} />
               <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart} addToCart={this.addToCart}/>} />
               <Route path='/ApiaryInfo' component={ApiaryInfo} />
-              <Route path='/cart' component={() => <Cart cart={this.state.cart}/>}/>
+              <Route path='/cart' component={() => <Cart cart={this.state.cart} setsPrice={this.setsPrice} price={this.state.price}/>}/>
               <Route path='/AddProduct' component={() => <AddProduct appState={this.state}  setProductId={this.setProductId}/>}/>
               <Route path='/' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
             </Switch>

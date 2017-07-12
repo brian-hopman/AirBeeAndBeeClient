@@ -45,14 +45,13 @@ class SignInUpForm extends Component {
    })
    .then( resp => resp.json())
    .then( data => {
-     this.props.setConsumerId(data.consumerId)
+     this.props.setConsumerId(data.id)
      this.setCookie(data.firstName)
    })
    this.redirectsToVendorSignUp()
  }
 
  setCookie(name) {
-   debugger
      var d = new Date();
      d.setTime(d.getTime() + (1*24*60*60*1000));
      var expires = "expires="+ d.toUTCString();
@@ -60,7 +59,6 @@ class SignInUpForm extends Component {
  }
 
  isVendorAccount() {
-   console.log(document.getElementById('isVendor').value)
    return document.getElementById('isVendor').value == 'on' ? true : false
  }
 
