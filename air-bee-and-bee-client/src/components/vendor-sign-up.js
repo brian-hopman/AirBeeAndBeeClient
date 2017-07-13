@@ -11,6 +11,7 @@ class VendorSignUp extends Component {
     this.state = {
       apiaryName: '',
       apiaryImage: '',
+      apiaryDescription: '',
       productTitle: '',
       productImage: ''
     }
@@ -24,13 +25,16 @@ class VendorSignUp extends Component {
     this.setState({
       apiaryName: document.getElementById('apiaryName').value,
       apiaryImage: document.getElementById('apiaryImage').value,
+      apiaryDescription: document.getElementById('apiaryDescription').value,
     })
+    console.log(this.state.apiaryImage)
   }
 
   handlesFormSubmit() {
   let state={
        name: this.state.apiaryName,
-       apiary_image: this.state.apiaryImage
+       apiary_image: this.state.apiaryImage,
+       description: this.state.apiaryDescription
       }
 
     let headers = new Headers();
@@ -82,7 +86,8 @@ class VendorSignUp extends Component {
     <div className="ui raised very padded text container segment">
           <form onSubmit={this.handlesFormSubmit} onChange={this.handlesChange}>
             <label>Name of Apiary:<input type='text' id='apiaryName' value={this.state.apiaryName}></input></label><br/>
-            <label>Imaged of Apiary:<input type='text' id='apiaryImage' value={this.state.apiaryImage}></input></label><br/>
+            <label>Image of Apiary:<input type='text' id='apiaryImage' value={this.state.apiaryImage}></input></label><br/>
+            <label>Description of Apiary:<input type='text' id='apiaryDescription' value={this.state.apiaryDescription}></input></label><br/>
             <Button primary type='submit'>Submit</Button>
           </form>
 
