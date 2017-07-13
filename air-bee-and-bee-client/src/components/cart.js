@@ -12,6 +12,7 @@ class Cart extends Component {
     this.getCookie=this.getCookie.bind(this)
     this.handlesTransactionSubmit=this.handlesTransactionSubmit.bind(this)
     this.mapsCart=this.mapsCart.bind(this)
+
   }
 
   handlesTransactionSubmit(e) {
@@ -82,6 +83,7 @@ class Cart extends Component {
   mapsCart() {
     let results = this.showObject(this.props.cart)
 
+
     return (
       results.map(item =>
         (
@@ -97,11 +99,23 @@ class Cart extends Component {
   checkOut(event) {
     event.preventDefault()
     let ccNumber = document.getElementById('cc-number').value
+    let name = document.getElementById('name').value
+    let shipping = document.getElementById('shippingAddress').value
+    let city = document.getElementById('city').value
+    let state = document.getElementById('state').value
+    let zip = document.getElementById('zip').value
+    let shippingInfo = {
+      name,
+      shipping,
+      city,
+      state,
+      zip
+    }
     let ccValidation = ccNumber.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)
-
     if (ccValidation == null) {
       alert('Sorry, the Credit Card number does not appear to be valid')
     } else if (ccValidation.length > 0) {
+      this.props.setsAddressInfo(shippingInfo)
       this.props.history.push('/ThankYou')
     } else {
       console.log("I don't know what is going on")
@@ -111,7 +125,6 @@ class Cart extends Component {
 
   render() {
     return (
-
       <div>
       <h2>Your Cart</h2>
         <div>
@@ -119,22 +132,21 @@ class Cart extends Component {
         </div>
         <div className="ui raised very padded text container segment checkout-form-container">
           <form className='checkout-form' onSubmit={this.checkOut}>
-            <label>Ship To:<br/><input type='text' id='shippingAddress' ></input></label><br/><br/>
+            <label>Ship To:<br/><input type='text' id='name'></input></label><br/><br/>
             <label>Shipping Address:<br/><input type='text' id='shippingAddress' ></input></label><br/><br/>
             <label>City:<br/><input type='text' id='city' ></input></label><br/><br/>
-            <label>State:<br/><input type='text' id='city' ></input></label><br/><br/>
-            <label>Zip:<br/><input type='text' id='CCinfo' ></input></label><br/><br/>
+            <label>State:<br/><input type='text' id='state' ></input></label><br/><br/>
+            <label>Zip:<br/><input type='text' id='zip' ></input></label><br/><br/>
             <br/>
             <br/>
             <br/>
             <label>Credit Card Number:<br/><input type='text' id='cc-number' ></input></label><br/><br/>
-            <label>Security Code:<br/><input type='text' id='CCinfo' ></input></label><br/><br/>
-            <label>Expiration Date:<br/><input type='text' id='CCinfo' ></input></label><br/><br/>
+
             <Button primary animated='fade'>
-              <Button.Content visible onClick={this.handlesProductFormSubmit}>
+              <Button.Content visible>
                 Checkout
               </Button.Content>
-              <Button.Content hidden>
+              <Button.Content hidden >
                 $ {this.props.price}
               </Button.Content>
             </Button>
