@@ -10,6 +10,7 @@
   margin:auto;
   min-height: 700px;
   opacity: .9;
+  padding:30px;
 }
 
 .apiary-listing {
@@ -49,6 +50,8 @@ h1.apiary-name {
   text-align: center;
 }
 
+
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -74,9 +77,6 @@ h1.apiary-name {
   font-size: 3rem;
 }
 
-.thank-you-page {
-  background: url(https://images.unsplash.com/photo-1439456713896-9f5687a0b5d3?dpr=1&auto=format&fit=crop&w=1500&h=844&q=80&cs=tinysrgb&crop=);
-}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
