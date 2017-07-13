@@ -152,9 +152,8 @@ class App extends Component {
 
   addToCart(event) {
     let item = JSON.parse(event.target.dataset.product)
-
     this.newCart(item)
-    console.log(this.state.cart)
+    alert(`Thank you for adding ${item.title} to your cart.`)
     }
 
   setCookie(name, id) {
