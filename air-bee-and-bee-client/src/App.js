@@ -35,7 +35,9 @@ class App extends Component {
 
       productAry: [],
 
-      price: 0
+      price: 0,
+
+      shippingInfo: null
     }
     this.handlesSearch=this.handlesSearch.bind(this)
     this.setConsumerId=this.setConsumerId.bind(this)
@@ -47,6 +49,7 @@ class App extends Component {
     this.addToCart = this.addToCart.bind(this)
     this.newCart = this.newCart.bind(this)
     this.setsPrice = this.setsPrice.bind(this)
+    this.setsAddressInfo = this.setsAddressInfo.bind(this)
     //this.handlesProductAry=this.handlesProductAry.bind(this)
   }
 
@@ -163,6 +166,14 @@ class App extends Component {
     document.cookie = name + "=" + id + ";" + expires + ";path=/";
   }
 
+  setsAddressInfo(shipping) {
+
+    this.setState({
+      shippingInfo: shipping
+    })
+
+  }
+
   // shouldComponentUpdate(nextProps,nextState) {
   //   debugger
   //   let array1 = this.state.productAry
@@ -185,10 +196,10 @@ class App extends Component {
               <Route path='/AddProduct' component={() => <AddProduct appState={this.state}  setProductId={this.setProductId}/>}/>
               <Route path='/signUp' component={() => <HomeContainer handlesSearch={this.handlesSearch} searchTerm={this.state.searchTerm} setConsumerId={this.setConsumerId} appState={this.state}/>} />
               <Route path='/vendorSignUp' component={() => <VendorSignUp appState={this.state} setVendorId={this.setVendorId}/>}/>
-              <Route path='/ThankYou' component={ThankYou} />
+              <Route path='/ThankYou' component={() => <ThankYou shippingInfo={this.state.shippingInfo}/>}/>
               <Route path='/Apiary/:id' component={() => <Apiary apiaryId={this.state.apiaryId} setCart={this.setCart} addToCart={this.addToCart}/>} />
               <Route path='/ApiaryInfo' component={ApiaryInfo} />
-              <Route path='/cart' component={() => <Cart cart={this.state.cart} setsPrice={this.setsPrice} price={this.state.price}/>}/>
+              <Route path='/cart' component={() => <Cart cart={this.state.cart} setsPrice={this.setsPrice} price={this.state.price} setsAddressInfo={this.setsAddressInfo}/>}/>
               <Route path='/' component={() => <ApiaryLister handlesClick={this.handlesClick}/>} />
             </Switch>
             </div>
